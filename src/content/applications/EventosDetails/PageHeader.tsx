@@ -1,4 +1,5 @@
 import { Typography, Button, Grid } from '@mui/material';
+import DeleteEventoForm from 'src/components/Forms/DeleteEventoForm';
 import EditEventoForm from 'src/components/Forms/EditEventoForm';
 
 interface IEvento {
@@ -41,6 +42,9 @@ function PageHeader({ Evento, TiposEventos }: PropsEditarEvento) {
       </Grid>
       <Grid item>
         <EditEventoForm Evento={Evento} TiposEventos={TiposEventos} />
+      </Grid>
+      <Grid item>
+        <DeleteEventoForm id={Evento.id} />
       </Grid>
     </Grid>
   );

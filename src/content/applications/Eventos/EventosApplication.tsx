@@ -3,8 +3,10 @@ import {
   CardContent,
   CardActions,
   Stack,
-  Typography
+  Typography,
+  Button
 } from '@mui/material';
+import DeleteEventoForm from 'src/components/Forms/DeleteEventoForm';
 import Link from 'src/components/Link';
 interface IEvento {
   id: number;
@@ -90,7 +92,7 @@ function EventosApplication() {
       {eventos.map((evento) => (
         <Card
           key={evento.id}
-          sx={{ width: '20vw', height: '25vh', textAlign: 'left' }}
+          sx={{ width: '30vw', height: '40vh', textAlign: 'left' }}
         >
           <CardContent>
             <Typography variant="h3" marginBottom={0.5} textAlign="center">
@@ -110,7 +112,16 @@ function EventosApplication() {
               <br />
               {evento.descricao}
             </Typography>
-            <Link to={`/management/eventos/${evento.id}`}>Ver Detalhes</Link>
+            <Typography maxWidth={'12vw'} marginBottom={0.5}>
+              <Button size="small" variant="outlined">
+                <Link to={`/management/eventos/${evento.id}`}>
+                  Ver Detalhes
+                </Link>
+              </Button>
+            </Typography>
+            <Typography maxWidth={'12vw'}>
+              <DeleteEventoForm id={evento.id} />
+            </Typography>
           </CardContent>
         </Card>
       ))}

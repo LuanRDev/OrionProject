@@ -6,8 +6,13 @@ import {
   Divider,
   Avatar,
   useTheme,
-  styled
+  styled,
+  ListItemText,
+  List,
+  ListItem
 } from '@mui/material';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import EventIcon from '@mui/icons-material/Event';
 
 interface PropsEvento {
   Evento: IEvento | undefined;
@@ -36,8 +41,8 @@ const AvatarPrimary = styled(Avatar)(
   ({ theme }) => `
       background: ${theme.colors.primary.lighter};
       color: ${theme.colors.primary.main};
-      width: ${theme.spacing(7)};
-      height: ${theme.spacing(7)};
+      width: ${theme.spacing(6)};
+      height: ${theme.spacing(6)};
 `
 );
 
@@ -65,7 +70,9 @@ function EventoInformation({ Evento }: PropsEvento) {
       <CardHeader title="Informações Gerais" />
       <Divider />
       <Box px={2} py={4} display="flex" alignItems="flex-start">
-        <AvatarPrimary></AvatarPrimary>
+        <AvatarPrimary>
+          <EventIcon />
+        </AvatarPrimary>
         <Box pl={2} flex={1}>
           <Typography variant="h3">
             {Evento.empresa} - {returnEventoTipo(Evento.tipoEvento)}
@@ -79,7 +86,7 @@ function EventoInformation({ Evento }: PropsEvento) {
               >
                 ID
               </Typography>
-              <Typography variant="h2"> {Evento.id}</Typography>
+              <Typography variant="h3"> {Evento.id}</Typography>
             </Box>
             <Box pr={8}>
               <Typography
@@ -89,7 +96,7 @@ function EventoInformation({ Evento }: PropsEvento) {
               >
                 Carga Horária
               </Typography>
-              <Typography variant="h2">{Evento.cargaHoraria} horas</Typography>
+              <Typography variant="h3">{Evento.cargaHoraria} horas</Typography>
             </Box>
             <Box pr={8}>
               <Typography
@@ -99,7 +106,7 @@ function EventoInformation({ Evento }: PropsEvento) {
               >
                 Instrutor
               </Typography>
-              <Typography variant="h2">{Evento.instrutor}</Typography>
+              <Typography variant="h3">{Evento.instrutor}</Typography>
             </Box>
           </Box>
         </Box>
@@ -119,7 +126,7 @@ function EventoInformation({ Evento }: PropsEvento) {
               >
                 Esperados
               </Typography>
-              <Typography variant="h2">
+              <Typography variant="h3">
                 {Evento.participantesEsperados}
               </Typography>
             </Box>
@@ -131,7 +138,7 @@ function EventoInformation({ Evento }: PropsEvento) {
               >
                 Confirmados
               </Typography>
-              <Typography variant="h2">
+              <Typography variant="h3">
                 {Evento.participantesConfirmados}
               </Typography>
             </Box>
@@ -140,7 +147,9 @@ function EventoInformation({ Evento }: PropsEvento) {
       </Box>
       <Divider />
       <Box px={2} py={4} display="flex" alignItems="flex-start">
-        <AvatarPrimary></AvatarPrimary>
+        <AvatarPrimary>
+          <InsertDriveFileIcon />
+        </AvatarPrimary>
         <Box pl={2} flex={1}>
           <Typography variant="h3">Conteúdo do evento</Typography>
 
@@ -153,7 +162,7 @@ function EventoInformation({ Evento }: PropsEvento) {
               >
                 Quantidade
               </Typography>
-              <Typography variant="h2">
+              <Typography variant="h3">
                 {Evento.conteudoEvento.length}
               </Typography>
             </Box>
@@ -163,9 +172,28 @@ function EventoInformation({ Evento }: PropsEvento) {
                 variant="caption"
                 sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
               >
-                Lists
+                Arquivos
               </Typography>
-              <Typography variant="h2">15</Typography>
+              <List>
+                <ListItem>
+                  <ListItemText
+                    primary="Arquivo 1"
+                    secondary="Link para o arquivo 1"
+                  />
+                </ListItem>
+                <ListItem>
+                  <ListItemText
+                    primary="Arquivo 2"
+                    secondary="Link para o arquivo 2"
+                  />
+                </ListItem>
+                <ListItem>
+                  <ListItemText
+                    primary="Arquivo 3"
+                    secondary="Link para o arquivo 3"
+                  />
+                </ListItem>
+              </List>
             </Box>
           </Box>
         </Box>

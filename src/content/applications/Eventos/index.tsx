@@ -5,14 +5,33 @@ import { Grid, Container } from '@mui/material';
 import Footer from 'src/components/Footer';
 import EventosApplication from './EventosApplication';
 
+interface ITipoEvento {
+  codigoTipo: number;
+  tipo: string;
+}
+
 function ApplicationsEventos() {
+  const tiposEventos: ITipoEvento[] = [
+    {
+      codigoTipo: 1,
+      tipo: 'Curso'
+    },
+    {
+      codigoTipo: 2,
+      tipo: 'Palestra'
+    },
+    {
+      codigoTipo: 3,
+      tipo: 'Treinamento'
+    }
+  ];
   return (
     <>
       <Helmet>
         <title>Eventos - Projeto Orion</title>
       </Helmet>
       <PageTitleWrapper>
-        <PageHeader />
+        <PageHeader TiposEventos={tiposEventos} />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid

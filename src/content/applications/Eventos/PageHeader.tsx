@@ -1,7 +1,16 @@
 import { Typography, Button, Grid } from '@mui/material';
 import NewEventoForm from 'src/components/Forms/NewEventoForm';
 
-function PageHeader() {
+interface PropsNovoEvento {
+  TiposEventos: ITipoEvento[] | undefined;
+}
+
+interface ITipoEvento {
+  codigoTipo: number;
+  tipo: string;
+}
+
+function PageHeader({ TiposEventos }: PropsNovoEvento) {
   const user = {
     name: 'Catherine Pike',
     avatar: '/static/images/avatars/1.jpg'
@@ -14,7 +23,7 @@ function PageHeader() {
         </Typography>
       </Grid>
       <Grid item>
-        <NewEventoForm />
+        <NewEventoForm TiposEventos={TiposEventos} />
       </Grid>
     </Grid>
   );
