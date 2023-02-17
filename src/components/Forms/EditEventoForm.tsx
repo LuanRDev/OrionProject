@@ -12,7 +12,11 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
-  Stack
+  Stack,
+  Alert,
+  Snackbar,
+  Slide,
+  SlideProps
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useForm } from 'react-hook-form';
@@ -68,11 +72,15 @@ const editarEventoFormSchema = z.object({
 
 type EditarEventoFormInput = z.infer<typeof editarEventoFormSchema>;
 
+type TransitionProps = Omit<SlideProps, 'direction'>;
+
+function TransitionUp(props: TransitionProps) {
+  return <Slide {...props} direction="up" />;
+}
+
 const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
   const [snackMessage, setSnackMessage] = useState<string>('');
   const [openSnack, setOpenSnack] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
   const [filesBase64, setFilesBase64] = useState<string[]>([]);
   const [filesNames, setFilesNames] = useState<string[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
@@ -113,10 +121,6 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
   const handleClose = () => {
     setOpenDialog(false);
   };
-
-  const handleOpenModal = () => setOpenModal(true);
-
-  const handleCloseModal = () => setOpenModal(false);
 
   const {
     reset,
@@ -163,8 +167,7 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
         participantesEsperados,
         conteudoEvento: filesBase64
       });
-
-      handleCloseModal();
+      handleClose();
     } catch (error) {
       setSnackMessage('Ops! Ocorreu um erro ao editar os dados do evento.');
       setOpenSnack(true);
@@ -175,6 +178,14 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
 
   return (
     <Stack>
+      <Snackbar
+        autoHideDuration={6000}
+        open={openSnack}
+        onClose={handleClose}
+        TransitionComponent={TransitionUp}
+      >
+        <Alert severity="error">{snackMessage}</Alert>
+      </Snackbar>
       <Button size="small" variant="outlined" onClick={handleClickOpen}>
         Editar evento
       </Button>
@@ -183,11 +194,11 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
         aria-labelledby="customized-dialog-title"
         open={openDialog}
       >
-        <CustomDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Editar Evento
-        </CustomDialogTitle>
-        <DialogContent dividers>
-          <form onSubmit={handleSubmit(handleEditarEvento)}>
+        <form onSubmit={handleSubmit(handleEditarEvento)}>
+          <CustomDialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Editar Evento
+          </CustomDialogTitle>
+          <DialogContent dividers>
             <CardContent>
               <Typography variant="h5">
                 Empresa - Tipo de evento
@@ -263,20 +274,19 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
                 />
               </Typography>
             </CardContent>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            size="large"
-            autoFocus
-            variant="outlined"
-            type="submit"
-            disabled={isSubmitting}
-            onClick={handleClose}
-          >
-            Aplicar alterações
-          </Button>
-        </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              size="large"
+              autoFocus
+              variant="outlined"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Aplicar alterações
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </Stack>
   );

@@ -26,17 +26,8 @@ export interface DialogTitleProps {
   children?: React.ReactNode;
   onClose: () => void;
 }
-
-interface IEventProps {
-  codigoEvento: number;
-  cargaHoraria: number;
-  dataRealizado: string;
-  empresa: string;
-  instrutor: string;
-  descricao: string;
-  tipoEvento: string;
-  participantesEsperados: number;
-  participacoesConfirmadas: number;
+interface PropsNovoEvento {
+  TiposEventos: ITipoEvento[] | undefined;
 }
 
 interface ITipoEvento {
@@ -55,7 +46,7 @@ const adicionarEventoFormSchema = z.object({
 
 type AdicionarEventoFormInput = z.infer<typeof adicionarEventoFormSchema>;
 
-const NovoEventoForm = () => {
+const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
   const [filesNames, setFilesNames] = useState<string[]>([]);
   const [filesBase64, setFilesBase64] = useState<string[]>([]);
   const [openModal, setOpenModal] = useState(false);
@@ -126,19 +117,6 @@ const NovoEventoForm = () => {
     }
   }
 
-  async function getTiposEventos() {
-    try {
-      const result = await apiEventos.get(`/api/eventos/tipos`);
-      setTiposEvento(result.data);
-      //setTiposEvento(tiposEventoMock);
-    } catch (error) {
-      setSnackMessage('Ops! Ocorreu um erro ao carregar os tipos de eventos.');
-      setOpenSnack(true);
-      console.log(error);
-    }
-  }
-  getTiposEventos();
-
   async function handleAdicionarEvento(data: AdicionarEventoFormInput) {
     const {
       descricao,
@@ -187,18 +165,18 @@ const NovoEventoForm = () => {
         aria-labelledby="customized-dialog-title"
         open={openDialog}
       >
-        <CustomDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Novo Evento
-        </CustomDialogTitle>
-        <DialogContent dividers>
-          <form onSubmit={handleSubmit(handleAdicionarEvento)}>
+        <form onSubmit={handleSubmit(handleAdicionarEvento)}>
+          <CustomDialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Novo Evento
+          </CustomDialogTitle>
+          <DialogContent dividers>
             <CardContent>
               <Typography variant="h5">
                 Empresa - Tipo de evento
                 <br />
                 <TextField type={'text'} {...register('empresa')} />
                 <Select onChange={handleChange} defaultValue={'1'}>
-                  {tiposEvento.map((tipo) => (
+                  {TiposEventos.map((tipo) => (
                     <MenuItem value={tipo.codigoTipo} key={tipo.codigoTipo}>
                       {tipo.tipo}
                     </MenuItem>
@@ -251,20 +229,20 @@ const NovoEventoForm = () => {
                 />
               </Typography>
             </CardContent>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            size="large"
-            autoFocus
-            variant="outlined"
-            type="submit"
-            disabled={isSubmitting}
-            onClick={handleClose}
-          >
-            Aplicar alterações
-          </Button>
-        </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              size="large"
+              autoFocus
+              variant="outlined"
+              type="submit"
+              disabled={isSubmitting}
+              onClick={handleClose}
+            >
+              Aplicar alterações
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </Stack>
   );
