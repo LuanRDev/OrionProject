@@ -2,7 +2,7 @@ import { useRoutes } from 'react-router-dom';
 import router from './router';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { LocalizationProvider } from '@mui/lab';
 
 import { CssBaseline } from '@mui/material';
 import ThemeProvider from './theme/ThemeProvider';
