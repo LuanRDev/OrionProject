@@ -3,72 +3,48 @@ import PageHeader from './PageHeader';
 import PageTitleWrapper from '../../../components/PageTitleWrapper';
 import { Grid, Container } from '@mui/material';
 import Footer from '../../../components/Footer';
-import EventosDetailsApplication from './EventosDetailsApplication';
-
-interface IEvento {
-  id: number;
-  tipoEvento: number;
-  descricao: string;
-  empresa: string;
-  instrutor: string;
-  dataRealizado: string;
-  cargaHoraria: number;
-  participantesEsperados: number;
-  participantesConfirmados: number;
-  inativo: boolean;
-  conteudoEvento: IConteudoEvento[];
-}
-
-interface IConteudoEvento {
-  nome: string;
-  url: string;
-}
-
-interface ITipoEvento {
-  codigoTipo: number;
-  tipo: string;
-}
+import SuspenseLoader from '../../../components/SuspenseLoader';
+import EventoInformation from './EventoInformation';
+import { TipoEvento } from '../../../models/tipo_evento';
+import { Evento } from '../../../models/evento';
+import { useEffect, useState } from 'react';
+import { apiEventos } from '../../../core/services/api/axios';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function EventosDetails() {
-  const evento: IEvento = {
-    id: 1,
-    tipoEvento: 1,
-    descricao:
-      'Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.',
-    cargaHoraria: 19,
-    dataRealizado: '2022-08-04T07:11:23Z',
-    empresa: 'Skimia',
-    instrutor: 'Irène',
-    participantesConfirmados: 2,
-    participantesEsperados: 10,
-    inativo: false,
-    conteudoEvento: [
-      {
-        nome: 'teste.txt',
-        url: 'eventos/empresas/empresa teste/121/documentos/8a409c26-647b-47b6-9c54-5e292de3f77a'
-      },
-      {
-        nome: 'arquivopdf.pdf',
-        url: 'eventos/empresas/empresa teste/121/documentos/a009b719-ca8a-40a5-af78-970a65e25144'
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [evento, setEvento] = useState<Evento>();
+  const [tiposEventos, setTiposEventos] = useState<TipoEvento[]>([]);
+  useEffect(() => {
+    async function getData() {
+      try {
+        await apiEventos.get(`/api/eventos/${id}`).then((result) => {
+          setEvento(result.data);
+          setIsLoading(false);
+        });
+      } catch (error) {
+        // navigate('/404');
+        console.log(error);
       }
-    ]
-  };
 
-  const tiposEventos: ITipoEvento[] = [
-    {
-      codigoTipo: 1,
-      tipo: 'Curso'
-    },
-    {
-      codigoTipo: 2,
-      tipo: 'Palestra'
-    },
-    {
-      codigoTipo: 3,
-      tipo: 'Treinamento'
+      try {
+        await apiEventos.get('/api/eventos/tipos').then((result) => {
+          setTiposEventos(result.data);
+          setIsLoading(false);
+        });
+      } catch (error) {
+        // navigate('/404');
+        console.log(error);
+      }
     }
-  ];
-  return (
+    getData();
+  }, []);
+
+  return evento !== undefined &&
+    evento.id !== undefined &&
+    tiposEventos !== undefined ? (
     <>
       <Helmet>
         <title>Detalhes do evento - Projeto Orion</title>
@@ -84,13 +60,15 @@ function EventosDetails() {
           alignItems="stretch"
           spacing={3}
         >
-          <Grid item xs={12}>
-            <EventosDetailsApplication />
+          <Grid item xs={12} md={12}>
+            <EventoInformation Evento={evento} />
           </Grid>
         </Grid>
       </Container>
       <Footer />
     </>
+  ) : (
+    <SuspenseLoader />
   );
 }
 

@@ -11,6 +11,7 @@ import MyCards from './MyCards';
 import Addresses from './Addresses';
 
 function ManagementUserProfile() {
+  console.log('passou aqui');
   const user = {
     savedCards: 7,
     name: 'Catherine Pike',

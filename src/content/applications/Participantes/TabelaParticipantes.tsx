@@ -1,5 +1,4 @@
 import { FC, ChangeEvent, useState } from 'react';
-import { format } from 'date-fns';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import {
@@ -26,49 +25,52 @@ import {
 } from '@mui/material';
 
 import Label from '../../../components/Label';
-import { CryptoOrder, CryptoOrderStatus } from '../../../models/crypto_order';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
+import { Participante, ParticipanteStatus } from '../../../models/participante';
+import { FormatDate } from '../../../components/FormatDate';
 
 interface TabelaParticipantesProps {
   className?: string;
-  participantes: CryptoOrder[];
+  participantes: Participante[];
 }
 
 interface Filters {
-  status?: CryptoOrderStatus;
+  status?: ParticipanteStatus;
 }
 
-const getStatusLabel = (cryptoOrderStatus: CryptoOrderStatus): JSX.Element => {
+const getStatusLabel = (
+  participanteStatus: ParticipanteStatus
+): JSX.Element => {
   const map = {
-    failed: {
-      text: 'Failed',
+    falta: {
+      text: 'Falta',
       color: 'error'
     },
-    completed: {
-      text: 'Completed',
+    confirmado: {
+      text: 'Confirmado',
       color: 'success'
     },
-    pending: {
-      text: 'Pending',
+    pendente: {
+      text: 'Pendente',
       color: 'warning'
     }
   };
 
-  const { text, color }: any = map[cryptoOrderStatus];
+  const { text, color }: any = map[participanteStatus];
 
   return <Label color={color}>{text}</Label>;
 };
 
 const applyFilters = (
-  cryptoOrders: CryptoOrder[],
+  participantes: Participante[],
   filters: Filters
-): CryptoOrder[] => {
-  return cryptoOrders.filter((cryptoOrder) => {
+): Participante[] => {
+  return participantes.filter((participante) => {
     let matches = true;
 
-    if (filters.status && cryptoOrder.status !== filters.status) {
+    if (filters.status && participante.status !== filters.status) {
       matches = false;
     }
 
@@ -77,20 +79,20 @@ const applyFilters = (
 };
 
 const applyPagination = (
-  cryptoOrders: CryptoOrder[],
+  participantes: Participante[],
   page: number,
   limit: number
-): CryptoOrder[] => {
-  return cryptoOrders.slice(page * limit, page * limit + limit);
+): Participante[] => {
+  return participantes.slice(page * limit, page * limit + limit);
 };
 
 const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
   participantes
 }) => {
-  const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<string[]>(
+  const [selectedParticipantes, setSelectedParticipantes] = useState<string[]>(
     []
   );
-  const selectedBulkActions = selectedCryptoOrders.length > 0;
+  const selectedBulkActions = selectedParticipantes.length > 0;
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
   const [filters, setFilters] = useState<Filters>({
@@ -99,20 +101,20 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
 
   const statusOptions = [
     {
-      id: 'all',
-      name: 'All'
+      id: 'todos',
+      name: 'Todos'
     },
     {
-      id: 'completed',
-      name: 'Completed'
+      id: 'confirmado',
+      name: 'Confirmado'
     },
     {
-      id: 'pending',
-      name: 'Pending'
+      id: 'pendente',
+      name: 'Pendente'
     },
     {
-      id: 'failed',
-      name: 'Failed'
+      id: 'falta',
+      name: 'Falta'
     }
   ];
 
@@ -129,12 +131,12 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
     }));
   };
 
-  const handleSelectAllCryptoOrders = (
+  const handleSelectAllParticipantes = (
     event: ChangeEvent<HTMLInputElement>
   ): void => {
-    setSelectedCryptoOrders(
+    setSelectedParticipantes(
       event.target.checked
-        ? participantes.map((participante) => participante.id)
+        ? participantes.map((participante) => participante.status)
         : []
     );
   };
@@ -143,13 +145,13 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
     event: ChangeEvent<HTMLInputElement>,
     participanteId: string
   ): void => {
-    if (!selectedCryptoOrders.includes(participanteId)) {
-      setSelectedCryptoOrders((prevSelected) => [
+    if (!selectedParticipantes.includes(participanteId)) {
+      setSelectedParticipantes((prevSelected) => [
         ...prevSelected,
         participanteId
       ]);
     } else {
-      setSelectedCryptoOrders((prevSelected) =>
+      setSelectedParticipantes((prevSelected) =>
         prevSelected.filter((id) => id !== participanteId)
       );
     }
@@ -163,17 +165,17 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
     setLimit(parseInt(event.target.value));
   };
 
-  const filteredCryptoOrders = applyFilters(participantes, filters);
-  const paginatedCryptoOrders = applyPagination(
-    filteredCryptoOrders,
+  const filteredParticipantes = applyFilters(participantes, filters);
+  const paginatedParticipantes = applyPagination(
+    filteredParticipantes,
     page,
     limit
   );
-  const selectedSomeCryptoOrders =
-    selectedCryptoOrders.length > 0 &&
-    selectedCryptoOrders.length < participantes.length;
-  const selectedAllCryptoOrders =
-    selectedCryptoOrders.length === participantes.length;
+  const selectedSomeParticipantes =
+    selectedParticipantes.length > 0 &&
+    selectedParticipantes.length < participantes.length;
+  const selectedAllParticipantes =
+    selectedParticipantes.length === participantes.length;
   const theme = useTheme();
 
   return (
@@ -190,7 +192,7 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
               <FormControl fullWidth variant="outlined">
                 <InputLabel>Status</InputLabel>
                 <Select
-                  value={filters.status || 'all'}
+                  value={filters.status || 'todos'}
                   onChange={handleStatusChange}
                   label="Status"
                   autoWidth
@@ -215,9 +217,9 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
               <TableCell padding="checkbox">
                 <Checkbox
                   color="primary"
-                  checked={selectedAllCryptoOrders}
-                  indeterminate={selectedSomeCryptoOrders}
-                  onChange={handleSelectAllCryptoOrders}
+                  checked={selectedAllParticipantes}
+                  indeterminate={selectedSomeParticipantes}
+                  onChange={handleSelectAllParticipantes}
                 />
               </TableCell>
               <TableCell>Nome</TableCell>
@@ -225,18 +227,18 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
               <TableCell>Código do evento</TableCell>
               <TableCell align="right">Data da Participação</TableCell>
               <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell align="right">Ações</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedCryptoOrders.map((cryptoOrder) => {
-              const isCryptoOrderSelected = selectedCryptoOrders.includes(
-                cryptoOrder.id
+            {paginatedParticipantes.map((participante) => {
+              const isCryptoOrderSelected = selectedParticipantes.includes(
+                participante.status
               );
               return (
                 <TableRow
                   hover
-                  key={cryptoOrder.id}
+                  key={participante.id}
                   selected={isCryptoOrderSelected}
                 >
                   <TableCell padding="checkbox">
@@ -244,7 +246,7 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
                       color="primary"
                       checked={isCryptoOrderSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneCryptoOrder(event, cryptoOrder.id)
+                        handleSelectOneCryptoOrder(event, participante.status)
                       }
                       value={isCryptoOrderSelected}
                     />
@@ -257,10 +259,7 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.orderDetails}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap>
-                      {format(cryptoOrder.orderDate, 'MMMM dd yyyy')}
+                      {participante.nome}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -271,7 +270,7 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.orderID}
+                      {participante.id}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -282,10 +281,7 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.sourceName}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap>
-                      {cryptoOrder.sourceDesc}
+                      {participante.codigoEvento}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
@@ -296,20 +292,14 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.amountCrypto}
-                      {cryptoOrder.cryptoCurrency}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap>
-                      {numeral(cryptoOrder.amount).format(
-                        `${cryptoOrder.currency}0,0.00`
-                      )}
+                      {FormatDate(participante.dataParticipacao)}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {getStatusLabel(cryptoOrder.status)}
+                    {/* {getStatusLabel(participante.status)} */}
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Edit Order" arrow>
+                    <Tooltip title="Editar Participante" arrow>
                       <IconButton
                         sx={{
                           '&:hover': {
@@ -323,7 +313,7 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
                         <EditTwoToneIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Delete Order" arrow>
+                    <Tooltip title="Excluir participante" arrow>
                       <IconButton
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
@@ -345,7 +335,7 @@ const TabelaParticipantes: FC<TabelaParticipantesProps> = ({
       <Box p={2}>
         <TablePagination
           component="div"
-          count={filteredCryptoOrders.length}
+          count={filteredParticipantes.length}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleLimitChange}
           page={page}

@@ -6,41 +6,14 @@ import {
   CardContent,
   Typography,
   Avatar,
-  alpha,
   Tooltip,
   CardActionArea,
   styled
 } from '@mui/material';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import NewEventoForm from '../../../components/Forms/NewEventoForm';
-
-const AvatarWrapper = styled(Avatar)(
-  ({ theme }) => `
-    margin: ${theme.spacing(2, 0, 1, -0.5)};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: ${theme.spacing(1)};
-    padding: ${theme.spacing(0.5)};
-    border-radius: 60px;
-    height: ${theme.spacing(5.5)};
-    width: ${theme.spacing(5.5)};
-    background: ${
-      theme.palette.mode === 'dark'
-        ? theme.colors.alpha.trueWhite[30]
-        : alpha(theme.colors.alpha.black[100], 0.07)
-    };
-  
-    img {
-      background: ${theme.colors.alpha.trueWhite[100]};
-      padding: ${theme.spacing(0.5)};
-      display: block;
-      border-radius: inherit;
-      height: ${theme.spacing(4.5)};
-      width: ${theme.spacing(4.5)};
-    }
-`
-);
+import { TipoEvento } from '../../../models/tipo_evento';
+import { Evento } from '../../../models/evento';
 
 const AvatarAddWrapper = styled(Avatar)(
   ({ theme }) => `
@@ -75,26 +48,12 @@ const CardAddAction = styled(Card)(
 `
 );
 
-interface ITipoEvento {
-  codigoTipo: number;
-  tipo: string;
+interface PropsDashboardEventos {
+  Eventos: Evento[] | undefined;
+  TiposEventos: TipoEvento[];
 }
 
-function Eventos() {
-  const tiposEventos: ITipoEvento[] = [
-    {
-      codigoTipo: 1,
-      tipo: 'Curso'
-    },
-    {
-      codigoTipo: 2,
-      tipo: 'Palestra'
-    },
-    {
-      codigoTipo: 3,
-      tipo: 'Treinamento'
-    }
-  ];
+function Eventos({ Eventos, TiposEventos }: PropsDashboardEventos) {
   return (
     <>
       <Box
@@ -105,93 +64,40 @@ function Eventos() {
           pb: 3
         }}
       >
-        <NewEventoForm TiposEventos={tiposEventos} />
+        <NewEventoForm TiposEventos={TiposEventos} />
       </Box>
       <Grid container spacing={3}>
-        <Grid xs={12} sm={6} md={3} item>
-          <Card
-            sx={{
-              px: 1
-            }}
-          >
-            <CardContent>
-              <Typography variant="h5" noWrap>
-                Empresa
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                Tipo do evento
-              </Typography>
-              <Box
-                sx={{
-                  pt: 3
-                }}
-              >
-                <Typography variant="h4" gutterBottom noWrap>
-                  Confirmados: 50
+        {Eventos.map((evento) => (
+          <Grid xs={12} sm={6} md={3} item key={evento.id}>
+            <Card
+              sx={{
+                px: 1
+              }}
+              key={evento.id}
+            >
+              <CardContent>
+                <Typography variant="h5" noWrap>
+                  {evento.empresa}
                 </Typography>
-                <Typography variant="subtitle2" noWrap>
-                  Esperados: 100
+                <Typography variant="subtitle1" noWrap>
+                  {evento.tipoEvento}
                 </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid xs={12} sm={6} md={3} item>
-          <Card
-            sx={{
-              px: 1
-            }}
-          >
-            <CardContent>
-              <Typography variant="h5" noWrap>
-                Empresa
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                Tipo do evento
-              </Typography>
-              <Box
-                sx={{
-                  pt: 3
-                }}
-              >
-                <Typography variant="h4" gutterBottom noWrap>
-                  Confirmados: 50
-                </Typography>
-                <Typography variant="subtitle2" noWrap>
-                  Esperados: 100
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid xs={12} sm={6} md={3} item>
-          <Card
-            sx={{
-              px: 1
-            }}
-          >
-            <CardContent>
-              <Typography variant="h5" noWrap>
-                Empresa
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                Tipo do evento
-              </Typography>
-              <Box
-                sx={{
-                  pt: 3
-                }}
-              >
-                <Typography variant="h4" gutterBottom noWrap>
-                  Confirmados: 50
-                </Typography>
-                <Typography variant="subtitle2" noWrap>
-                  Esperados: 100
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
+                <Box
+                  sx={{
+                    pt: 3
+                  }}
+                >
+                  <Typography variant="h4" gutterBottom noWrap>
+                    Confirmados: {evento.participantesConfirmados}
+                  </Typography>
+                  <Typography variant="subtitle2" noWrap>
+                    Esperados: {evento.participantesEsperados}
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
         <Grid xs={12} sm={6} md={3} item>
           <Tooltip arrow title="Clique para adicionar um novo evento">
             <CardAddAction>

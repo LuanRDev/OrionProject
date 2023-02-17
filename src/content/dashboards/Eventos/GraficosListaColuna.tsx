@@ -162,12 +162,6 @@ function GraficosListaColuna() {
             }}
           >
             <Box display="flex" alignItems="center">
-              <AvatarWrapper>
-                <img
-                  alt="BTC"
-                  src="/static/images/placeholders/logo/bitcoin.png"
-                />
-              </AvatarWrapper>
               <Box>
                 <Typography variant="h4" noWrap>
                   Última semana
@@ -237,12 +231,6 @@ function GraficosListaColuna() {
             }}
           >
             <Box display="flex" alignItems="center">
-              <AvatarWrapper>
-                <img
-                  alt="ETH"
-                  src="/static/images/placeholders/logo/ethereum.png"
-                />
-              </AvatarWrapper>
               <Box>
                 <Typography variant="h4" noWrap>
                   Último mês
@@ -312,12 +300,6 @@ function GraficosListaColuna() {
             }}
           >
             <Box display="flex" alignItems="center">
-              <AvatarWrapper>
-                <img
-                  alt="ADA"
-                  src="/static/images/placeholders/logo/cardano.png"
-                />
-              </AvatarWrapper>
               <Box>
                 <Typography variant="h4" noWrap>
                   Últimos 3 meses

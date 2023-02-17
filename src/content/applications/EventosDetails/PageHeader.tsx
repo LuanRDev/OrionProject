@@ -1,32 +1,11 @@
 import { Typography, Button, Grid } from '@mui/material';
+import { Evento } from '../../../models/evento';
+import { TipoEvento } from '../../../models/tipo_evento';
 import DeleteEventoForm from '../../../components/Forms/DeleteEventoForm';
 import EditEventoForm from '../../../components/Forms/EditEventoForm';
-
-interface IEvento {
-  id: number;
-  tipoEvento: number;
-  descricao: string;
-  empresa: string;
-  instrutor: string;
-  dataRealizado: string;
-  cargaHoraria: number;
-  participantesEsperados: number;
-  participantesConfirmados: number;
-  inativo: boolean;
-  conteudoEvento: IConteudoEvento[];
-}
-
-interface IConteudoEvento {
-  nome: string;
-  url: string;
-}
-interface ITipoEvento {
-  codigoTipo: number;
-  tipo: string;
-}
 interface PropsEditarEvento {
-  Evento: IEvento | undefined;
-  TiposEventos: ITipoEvento[] | undefined;
+  Evento: Evento;
+  TiposEventos: TipoEvento[];
 }
 function PageHeader({ Evento, TiposEventos }: PropsEditarEvento) {
   const user = {
@@ -42,8 +21,6 @@ function PageHeader({ Evento, TiposEventos }: PropsEditarEvento) {
       </Grid>
       <Grid item>
         <EditEventoForm Evento={Evento} TiposEventos={TiposEventos} />
-      </Grid>
-      <Grid item>
         <DeleteEventoForm id={Evento.id} />
       </Grid>
     </Grid>

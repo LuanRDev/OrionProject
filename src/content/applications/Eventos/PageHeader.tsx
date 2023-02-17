@@ -1,13 +1,9 @@
 import { Typography, Button, Grid } from '@mui/material';
+import { TipoEvento } from '../../../models/tipo_evento';
 import NewEventoForm from '../../../components/Forms/NewEventoForm';
 
 interface PropsNovoEvento {
-  TiposEventos: ITipoEvento[] | undefined;
-}
-
-interface ITipoEvento {
-  codigoTipo: number;
-  tipo: string;
+  TiposEventos: TipoEvento[] | undefined;
 }
 
 function PageHeader({ TiposEventos }: PropsNovoEvento) {
