@@ -75,7 +75,26 @@ const CardAddAction = styled(Card)(
 `
 );
 
+interface ITipoEvento {
+  codigoTipo: number;
+  tipo: string;
+}
+
 function Eventos() {
+  const tiposEventos: ITipoEvento[] = [
+    {
+      codigoTipo: 1,
+      tipo: 'Curso'
+    },
+    {
+      codigoTipo: 2,
+      tipo: 'Palestra'
+    },
+    {
+      codigoTipo: 3,
+      tipo: 'Treinamento'
+    }
+  ];
   return (
     <>
       <Box
@@ -86,7 +105,7 @@ function Eventos() {
           pb: 3
         }}
       >
-        <NewEventoForm />
+        <NewEventoForm TiposEventos={tiposEventos} />
       </Box>
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3} item>
