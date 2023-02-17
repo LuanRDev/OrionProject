@@ -1,5 +1,5 @@
 import { Typography, Button, Grid } from '@mui/material';
-import NewEventoForm from 'src/components/Forms/NewEventoForm';
+import NewEventoForm from '../../../components/Forms/NewEventoForm';
 
 interface PropsNovoEvento {
   TiposEventos: ITipoEvento[] | undefined;

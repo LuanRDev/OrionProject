@@ -6,8 +6,8 @@ import {
   Typography,
   Button
 } from '@mui/material';
-import DeleteEventoForm from 'src/components/Forms/DeleteEventoForm';
-import Link from 'src/components/Link';
+import DeleteEventoForm from '../../../components/Forms/DeleteEventoForm';
+import Link from '../../../components/Link';
 interface IEvento {
   id: number;
   tipoEvento: number;

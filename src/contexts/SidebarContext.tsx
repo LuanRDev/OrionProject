@@ -5,12 +5,16 @@ type SidebarContext = {
   closeSidebar: () => void;
 };
 
+type SidebarProps = {
+  children: React.ReactNode;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SidebarContext = createContext<SidebarContext>(
   {} as SidebarContext
 );
 
-export const SidebarProvider: FC = ({ children }) => {
+export const SidebarProvider = ({ children }: SidebarProps) => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const toggleSidebar = () => {
     setSidebarToggle(!sidebarToggle);

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import Scrollbar from 'src/components/Scrollbar';
-import { SidebarContext } from 'src/contexts/SidebarContext';
+import Scrollbar from '../../../components/Scrollbar';
+import { SidebarContext } from '../../../contexts/SidebarContext';
 
 import {
   Box,

@@ -8,8 +8,6 @@ import {
   Container
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
-import Footer from 'src/components/Footer';
-import RecentActivity from '../Users/profile/RecentActivity';
 import EventoInformation from './EventoInformation';
 
 interface IEvento {

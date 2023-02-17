@@ -9,7 +9,7 @@ import {
   Typography
 } from '@mui/material';
 import { useState } from 'react';
-import { apiEventos } from 'src/core/services/api/axios';
+import { apiEventos } from '../../core/services/api/axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';

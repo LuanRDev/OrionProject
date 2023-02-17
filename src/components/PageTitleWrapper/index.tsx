@@ -12,7 +12,7 @@ interface PageTitleWrapperProps {
   children?: ReactNode;
 }
 
-const PageTitleWrapper: FC<PageTitleWrapperProps> = ({ children }) => {
+const PageTitleWrapper: FC<PageTitleWrapperProps> = ({ children }: any) => {
   return (
     <PageTitle className="MuiPageTitle-wrapper">
       <Container maxWidth="lg">{children}</Container>

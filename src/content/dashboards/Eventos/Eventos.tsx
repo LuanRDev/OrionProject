@@ -12,7 +12,7 @@ import {
   styled
 } from '@mui/material';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
-import NewEventoForm from 'src/components/Forms/NewEventoForm';
+import NewEventoForm from '../../../components/Forms/NewEventoForm';
 
 const AvatarWrapper = styled(Avatar)(
   ({ theme }) => `
