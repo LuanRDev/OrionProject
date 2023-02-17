@@ -1,5 +1,4 @@
 import {
-  Box,
   CardContent,
   Typography,
   TextField,
@@ -9,7 +8,6 @@ import {
   SelectChangeEvent,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton,
   Stack,
@@ -19,12 +17,15 @@ import {
   SlideProps
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { apiEventos } from '../../core/services/api/axios';
-import { FunctionComponent, useState } from 'react';
+import { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
+import { Evento } from '../../models/evento';
+import { TipoEvento } from '../../models/tipo_evento';
 
 export interface DialogTitleProps {
   id: string;
@@ -32,32 +33,8 @@ export interface DialogTitleProps {
   onClose: () => void;
 }
 interface PropsEditarEvento {
-  Evento: IEvento | undefined;
-  TiposEventos: ITipoEvento[] | undefined;
-}
-
-interface IEvento {
-  id: number;
-  tipoEvento: number;
-  descricao: string;
-  empresa: string;
-  instrutor: string;
-  dataRealizado: string;
-  cargaHoraria: number;
-  participantesEsperados: number;
-  participantesConfirmados: number;
-  inativo: boolean;
-  conteudoEvento: IConteudoEvento[];
-}
-
-interface IConteudoEvento {
-  nome: string;
-  url: string;
-}
-
-interface ITipoEvento {
-  codigoTipo: number;
-  tipo: string;
+  Evento: Evento | undefined;
+  TiposEventos: TipoEvento[] | undefined;
 }
 
 const editarEventoFormSchema = z.object({
@@ -186,7 +163,12 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
       >
         <Alert severity="error">{snackMessage}</Alert>
       </Snackbar>
-      <Button size="small" variant="outlined" onClick={handleClickOpen}>
+      <Button
+        size="small"
+        variant="outlined"
+        onClick={handleClickOpen}
+        startIcon={<EditIcon fontSize="small" />}
+      >
         Editar evento
       </Button>
       <Dialog
@@ -209,9 +191,9 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
                   defaultValue={Evento?.empresa}
                 />
                 <Select onChange={handleChange} defaultValue={'1'}>
-                  {TiposEventos.map((tipo) => (
-                    <MenuItem value={tipo.codigoTipo} key={tipo.codigoTipo}>
-                      {tipo.tipo}
+                  {TiposEventos.map((tipo, index) => (
+                    <MenuItem value={tipo.codigoTipo} key={index}>
+                      {tipo.tipoEvento}
                     </MenuItem>
                   ))}
                 </Select>

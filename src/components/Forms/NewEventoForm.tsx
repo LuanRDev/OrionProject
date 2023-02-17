@@ -20,6 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { apiEventos } from '../../core/services/api/axios';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import { TipoEvento } from '../../models/tipo_evento';
 
 export interface DialogTitleProps {
   id: string;
@@ -27,12 +28,7 @@ export interface DialogTitleProps {
   onClose: () => void;
 }
 interface PropsNovoEvento {
-  TiposEventos: ITipoEvento[] | undefined;
-}
-
-interface ITipoEvento {
-  codigoTipo: number;
-  tipo: string;
+  TiposEventos: TipoEvento[] | undefined;
 }
 const adicionarEventoFormSchema = z.object({
   descricao: z.string(),
@@ -47,13 +43,13 @@ const adicionarEventoFormSchema = z.object({
 type AdicionarEventoFormInput = z.infer<typeof adicionarEventoFormSchema>;
 
 const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
+  console.log(TiposEventos);
   const [filesNames, setFilesNames] = useState<string[]>([]);
   const [filesBase64, setFilesBase64] = useState<string[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
-  const [tiposEvento, setTiposEvento] = useState<ITipoEvento[]>([]);
   const [snackMessage, setSnackMessage] = useState<string>('');
   const [selectTipoEvento, setSelectTipoEvento] = useState<number | string>(1);
 
@@ -177,8 +173,8 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
                 <TextField type={'text'} {...register('empresa')} />
                 <Select onChange={handleChange} defaultValue={'1'}>
                   {TiposEventos.map((tipo) => (
-                    <MenuItem value={tipo.codigoTipo} key={tipo.codigoTipo}>
-                      {tipo.tipo}
+                    <MenuItem value={tipo.id} key={tipo.id}>
+                      {tipo.tipoEvento}
                     </MenuItem>
                   ))}
                 </Select>
