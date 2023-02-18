@@ -11,13 +11,15 @@ import { apiEventos } from '../../../core/services/api/axios';
 import { useEffect, useState } from 'react';
 import { Evento } from '../../../models/evento';
 import { TipoEvento } from '../../../models/tipo_evento';
+import SuspenseLoader from '../../../components/SuspenseLoader';
 
 function DashboardCrypto() {
   const [eventos, setEventos] = useState<Evento[]>([]);
   const [tiposEventos, setTiposEventos] = useState<TipoEvento[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function getEventos() {
+    async function getData() {
       try {
         await apiEventos
           .get('/api/eventos?limit=3')
@@ -25,13 +27,6 @@ function DashboardCrypto() {
       } catch (error) {
         console.log(error);
       }
-    }
-
-    if (eventos.length === 0) {
-      getEventos();
-    }
-
-    async function getTiposEventos() {
       try {
         await apiEventos
           .get('/api/eventos/tipos')
@@ -40,12 +35,13 @@ function DashboardCrypto() {
         console.log(error);
       }
     }
-
-    if (tiposEventos.length === 0) {
-      getTiposEventos();
-    }
+    getData();
+    setIsLoading(false);
   });
-  return (
+  if (isLoading === true) {
+    return <SuspenseLoader />;
+  }
+  return eventos.length !== 0 && tiposEventos.length !== 0 ? (
     <>
       <Helmet>
         <title>Dashboard - Projeto Orion</title>
@@ -74,6 +70,8 @@ function DashboardCrypto() {
       </Container>
       <Footer />
     </>
+  ) : (
+    <SuspenseLoader />
   );
 }
 
