@@ -21,8 +21,11 @@ function EventosApplication({ Eventos }: EventosApplicationProps) {
               <Typography variant="h3" marginBottom={0.5} textAlign="center">
                 {evento.empresa} - {ReturnEventoTipo(evento.tipoEvento)}
               </Typography>
+              <Typography variant="body1" marginBottom={0.5}>
+                ID do Evento: {evento.id}
+              </Typography>
               <Typography variant="body2" marginBottom={0.5}>
-                Data do evento: {FormatDate(evento.dataRealizado)}
+                {FormatDate(evento.dataRealizado)}
               </Typography>
               <Typography
                 variant="body1"
@@ -41,7 +44,7 @@ function EventosApplication({ Eventos }: EventosApplicationProps) {
                   </Link>
                 </Button>
               </Typography>
-              <Typography maxWidth={'12vw'}>
+              <Typography width={'12vw'}>
                 <DeleteEventoForm id={evento.id} />
               </Typography>
             </CardContent>
