@@ -26,6 +26,7 @@ import { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import { Evento } from '../../models/evento';
 import { TipoEvento } from '../../models/tipo_evento';
+import { useNavigate } from 'react-router-dom';
 
 export interface DialogTitleProps {
   id: string;
@@ -64,6 +65,7 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
   const [selectTipoEvento, setSelectTipoEvento] = useState<number | string>(
     Evento?.tipoEvento || 1
   );
+  const navigate = useNavigate();
 
   function CustomDialogTitle(props: DialogTitleProps) {
     const { children, onClose, ...other } = props;
@@ -145,6 +147,7 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
         conteudoEvento: filesBase64
       });
       handleClose();
+      navigate(0);
     } catch (error) {
       setSnackMessage('Ops! Ocorreu um erro ao editar os dados do evento.');
       setOpenSnack(true);

@@ -11,7 +11,11 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Stack
+  Stack,
+  Snackbar,
+  Alert,
+  Slide,
+  SlideProps
 } from '@mui/material';
 import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
@@ -21,6 +25,7 @@ import { useForm } from 'react-hook-form';
 import { apiEventos } from '../../core/services/api/axios';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import { TipoEvento } from '../../models/tipo_evento';
+import { useNavigate } from 'react-router-dom';
 
 export interface DialogTitleProps {
   id: string;
@@ -29,6 +34,12 @@ export interface DialogTitleProps {
 }
 interface PropsNovoEvento {
   TiposEventos: TipoEvento[] | undefined;
+}
+
+type TransitionProps = Omit<SlideProps, 'direction'>;
+
+function TransitionUp(props: TransitionProps) {
+  return <Slide {...props} direction="up" />;
 }
 const adicionarEventoFormSchema = z.object({
   descricao: z.string(),
@@ -52,6 +63,7 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
   const [snackMessage, setSnackMessage] = useState<string>('');
   const [selectTipoEvento, setSelectTipoEvento] = useState<number | string>(1);
 
+  const navigate = useNavigate();
   const handleCloseModal = () => setOpenModal(false);
 
   const handleClickOpen = () => {
@@ -135,7 +147,7 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
       setFilesBase64([]);
       setFilesNames([]);
       handleCloseModal();
-      setRefreshKey((oldKey) => oldKey + 1);
+      navigate(0);
     } catch (error) {
       setSnackMessage('Ops! Ocorreu um erro ao adicionar o evento.');
       setOpenSnack(true);
@@ -147,6 +159,14 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
 
   return (
     <Stack>
+      <Snackbar
+        autoHideDuration={6000}
+        open={openSnack}
+        onClose={handleClose}
+        TransitionComponent={TransitionUp}
+      >
+        <Alert severity="error">{snackMessage}</Alert>
+      </Snackbar>
       <Button
         size="small"
         variant="outlined"

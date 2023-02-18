@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { apiEventos } from '../../core/services/api/axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -66,8 +66,7 @@ const DeleteEventoForm = ({ id }: DeleteEventoProps) => {
     try {
       await apiEventos.delete(`/api/eventos/${id}`);
       handleClose();
-      navigate('/management/eventos');
-      handleClose();
+      navigate(0);
     } catch (error) {
       handleClose();
       setSnackMessage('Ops! Ocorreu um erro ao excluir o evento.');
