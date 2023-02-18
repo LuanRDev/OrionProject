@@ -10,10 +10,11 @@ import {
   CardActionArea,
   styled
 } from '@mui/material';
-import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import NewEventoForm from '../../../components/Forms/NewEventoForm';
 import { TipoEvento } from '../../../models/tipo_evento';
 import { Evento } from '../../../models/evento';
+import { ReturnEventoTipo } from '../../../components/ReturnEventoTipo';
+import NewEventoFormCard from '../../../components/Forms/NewEventoFormCard';
 
 const AvatarAddWrapper = styled(Avatar)(
   ({ theme }) => `
@@ -54,6 +55,7 @@ interface PropsDashboardEventos {
 }
 
 function Eventos({ Eventos, TiposEventos }: PropsDashboardEventos) {
+  console.log(Eventos);
   return (
     <>
       <Box
@@ -80,7 +82,7 @@ function Eventos({ Eventos, TiposEventos }: PropsDashboardEventos) {
                   {evento.empresa}
                 </Typography>
                 <Typography variant="subtitle1" noWrap>
-                  {evento.tipoEvento}
+                  {ReturnEventoTipo(evento.tipoEvento)}
                 </Typography>
                 <Box
                   sx={{
@@ -88,7 +90,7 @@ function Eventos({ Eventos, TiposEventos }: PropsDashboardEventos) {
                   }}
                 >
                   <Typography variant="h4" gutterBottom noWrap>
-                    Confirmados: {evento.participantesConfirmados}
+                    Confirmados: {evento.participacoesConfirmadas}
                   </Typography>
                   <Typography variant="subtitle2" noWrap>
                     Esperados: {evento.participantesEsperados}
@@ -108,7 +110,7 @@ function Eventos({ Eventos, TiposEventos }: PropsDashboardEventos) {
               >
                 <CardContent>
                   <AvatarAddWrapper>
-                    <AddTwoToneIcon fontSize="large" />
+                    <NewEventoFormCard TiposEventos={TiposEventos} />
                   </AvatarAddWrapper>
                 </CardContent>
               </CardActionArea>

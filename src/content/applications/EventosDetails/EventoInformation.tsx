@@ -149,7 +149,7 @@ function EventoInformation({ Evento }: PropsEvento) {
                 Confirmados
               </Typography>
               <Typography variant="h4">
-                {Evento.participantesConfirmados}
+                {Evento.participacoesConfirmadas}
               </Typography>
             </Box>
           </Box>

@@ -9,7 +9,7 @@ export interface Evento {
   dataRealizado: string;
   cargaHoraria: number;
   participantesEsperados: number;
-  participantesConfirmados: number;
+  participacoesConfirmadas: number;
   inativo: boolean;
   conteudoEvento: ConteudoEvento[];
 }
