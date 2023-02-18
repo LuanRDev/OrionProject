@@ -18,7 +18,7 @@ function ApplicationsEventos() {
     async function getEventos() {
       try {
         await apiEventos
-          .get('/api/eventos?limit=3')
+          .get('/api/eventos')
           .then((result) => setEventos(result.data));
       } catch (error) {
         console.log(error);
