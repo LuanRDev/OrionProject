@@ -55,7 +55,6 @@ interface PropsDashboardEventos {
 }
 
 function Eventos({ Eventos, TiposEventos }: PropsDashboardEventos) {
-  console.log(Eventos);
   return (
     <>
       <Box
