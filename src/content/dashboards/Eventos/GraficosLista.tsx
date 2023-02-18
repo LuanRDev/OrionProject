@@ -20,8 +20,16 @@ const EmptyResultsWrapper = styled('img')(
       height: ${theme.spacing(34)};
 `
 );
+interface GraficoParams {
+  DadosGrafico: Tempo;
+}
 
-function GraficosLista() {
+interface Tempo {
+  UltimaSemana: number[];
+  UltimoMes: number[];
+  UltimosTresMeses: number[];
+}
+function GraficosLista({ DadosGrafico }: GraficoParams) {
   const [tabs, setTab] = useState<string | null>('watch_list_columns');
 
   const handleViewOrientation = (
@@ -56,9 +64,13 @@ function GraficosLista() {
         </ToggleButtonGroup>
       </Box>
 
-      {tabs === 'watch_list_columns' && <GraficosListaColuna />}
+      {tabs === 'watch_list_columns' && (
+        <GraficosListaColuna DadosGrafico={DadosGrafico} />
+      )}
 
-      {tabs === 'watch_list_rows' && <GraficosListaLinha />}
+      {tabs === 'watch_list_rows' && (
+        <GraficosListaLinha DadosGrafico={DadosGrafico} />
+      )}
 
       {!tabs && (
         <Card

@@ -47,7 +47,17 @@ const AvatarWrapper = styled(Avatar)(
 `
 );
 
-function GraficosListaLinha() {
+interface GraficoParams {
+  DadosGrafico: Tempo;
+}
+
+interface Tempo {
+  UltimaSemana: number[];
+  UltimoMes: number[];
+  UltimosTresMeses: number[];
+}
+
+function GraficosListaLinha({ DadosGrafico }: GraficoParams) {
   const theme = useTheme();
 
   const Box1Options: ApexOptions = {
@@ -117,22 +127,22 @@ function GraficosListaLinha() {
 
   const Box1Data = [
     {
-      name: 'Bitcoin',
-      data: [55.701, 57.598, 48.607, 46.439, 58.755, 46.978, 58.16]
+      name: 'Última Semana',
+      data: DadosGrafico.UltimaSemana
     }
   ];
 
   const Box2Data = [
     {
-      name: 'Ethereum',
-      data: [1.854, 1.873, 1.992, 2.009, 1.909, 1.942, 1.884]
+      name: 'Último Mês',
+      data: DadosGrafico.UltimoMes
     }
   ];
 
   const Box3Data = [
     {
-      name: 'Cardano',
-      data: [13, 16, 14, 18, 8, 11, 20]
+      name: 'Últimos Três Meses',
+      data: DadosGrafico.UltimosTresMeses
     }
   ];
 

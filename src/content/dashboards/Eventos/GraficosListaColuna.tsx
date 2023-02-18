@@ -41,7 +41,17 @@ const AvatarWrapper = styled(Avatar)(
 `
 );
 
-function GraficosListaColuna() {
+interface GraficoParams {
+  DadosGrafico: Tempo;
+}
+
+interface Tempo {
+  UltimaSemana: number[];
+  UltimoMes: number[];
+  UltimosTresMeses: number[];
+}
+
+function GraficosListaColuna({ DadosGrafico }: GraficoParams) {
   const theme = useTheme();
 
   const chartOptions: ApexOptions = {
@@ -125,20 +135,20 @@ function GraficosListaColuna() {
   };
   const chart1Data = [
     {
-      name: 'Bitcoin Price',
-      data: [55.701, 57.598, 48.607, 46.439, 58.755, 46.978, 58.16]
+      name: 'Última semana',
+      data: DadosGrafico.UltimaSemana
     }
   ];
   const chart2Data = [
     {
-      name: 'Ethereum Price',
-      data: [13, 16, 14, 20, 8, 11, 20]
+      name: 'Último mês',
+      data: DadosGrafico.UltimoMes
     }
   ];
   const chart3Data = [
     {
-      name: 'Cardano Price',
-      data: [51.85, 41.77, 22.09, 42.0, 71.9, 51.84, 31.84]
+      name: 'Últimos 3 meses',
+      data: DadosGrafico.UltimosTresMeses
     }
   ];
 
