@@ -18,7 +18,7 @@ const Loader = (Component: any) => (props: any) =>
 
 // Dashboards
 
-const Crypto = Loader(lazy(() => import('./content/dashboards/Eventos')));
+const Evento = Loader(lazy(() => import('./content/dashboards/Eventos')));
 
 // Applications
 const Participantes = Loader(
@@ -78,6 +78,14 @@ const routes: RouteObject[] = [
     element: <BaseLayout />,
     children: [
       {
+        path: '/',
+        element: <Navigate to="/dashboards/eventos" replace />
+      },
+      {
+        path: 'eventos',
+        element: <Navigate to="/dashboards/eventos" replace />
+      },
+      {
         path: 'status',
         children: [
           {
@@ -118,7 +126,7 @@ const routes: RouteObject[] = [
       },
       {
         path: 'eventos',
-        element: <Crypto />
+        element: <Evento />
       }
     ]
   },
