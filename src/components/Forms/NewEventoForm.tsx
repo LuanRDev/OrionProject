@@ -56,15 +56,12 @@ type AdicionarEventoFormInput = z.infer<typeof adicionarEventoFormSchema>;
 const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
   const [filesNames, setFilesNames] = useState<string[]>([]);
   const [filesBase64, setFilesBase64] = useState<string[]>([]);
-  const [openModal, setOpenModal] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState<string>('');
   const [selectTipoEvento, setSelectTipoEvento] = useState<number | string>(1);
 
   const navigate = useNavigate();
-  const handleCloseModal = () => setOpenModal(false);
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -146,11 +143,12 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
       });
       setFilesBase64([]);
       setFilesNames([]);
-      handleCloseModal();
+      handleClose();
       navigate(0);
     } catch (error) {
       setSnackMessage('Ops! Ocorreu um erro ao adicionar o evento.');
       setOpenSnack(true);
+      handleClose();
       console.log(error);
     }
 
@@ -189,8 +187,8 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
               <Typography variant="h5">
                 Empresa - Tipo de evento
                 <br />
-                <TextField type={'text'} {...register('empresa')} />
-                <Select onChange={handleChange} defaultValue={'1'}>
+                <TextField type={'text'} {...register('empresa')} required />
+                <Select onChange={handleChange} defaultValue={'1'} required>
                   {TiposEventos.map((tipo) => (
                     <MenuItem value={tipo.id} key={tipo.id}>
                       {tipo.tipoDescricao}
@@ -204,12 +202,18 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
                 <TextField
                   type={'datetime-local'}
                   {...register('dataRealizado')}
+                  required
                 />
               </Typography>
               <Typography variant="h6">
                 Descrição:
                 <br />
-                <TextField type={'text'} {...register('descricao')} multiline />
+                <TextField
+                  type={'text'}
+                  {...register('descricao')}
+                  multiline
+                  required
+                />
               </Typography>
               <Typography variant="h6">
                 Carga Horária:
@@ -217,12 +221,13 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
                 <TextField
                   type={'number'}
                   {...register('cargaHoraria', { valueAsNumber: true })}
+                  required
                 />
               </Typography>
               <Typography variant="h6">
                 Instrutor:
                 <br />
-                <TextField type={'text'} {...register('instrutor')} />
+                <TextField type={'text'} {...register('instrutor')} required />
               </Typography>
               <Typography variant="h6">
                 Participantes esperados:
@@ -232,6 +237,7 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
                   {...register('participantesEsperados', {
                     valueAsNumber: true
                   })}
+                  required
                 />
               </Typography>
               <Typography>
@@ -252,7 +258,6 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
               variant="outlined"
               type="submit"
               disabled={isSubmitting}
-              onClick={handleClose}
             >
               Aplicar alterações
             </Button>
