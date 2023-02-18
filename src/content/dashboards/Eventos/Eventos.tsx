@@ -78,7 +78,7 @@ function Eventos({ Eventos, TiposEventos }: PropsDashboardEventos) {
             >
               <CardContent>
                 <Typography variant="h5" noWrap>
-                  {evento.empresa}
+                  {evento.empresa} - {evento.id}
                 </Typography>
                 <Typography variant="subtitle1" noWrap>
                   {ReturnEventoTipo(evento.tipoEvento)}
