@@ -166,7 +166,7 @@ const NewEventoFormCard = ({ TiposEventos }: PropsNovoEvento) => {
                 <Select onChange={handleChange} defaultValue={'1'}>
                   {TiposEventos.map((tipo) => (
                     <MenuItem value={tipo.id} key={tipo.id}>
-                      {tipo.tipoEvento}
+                      {tipo.tipoDescricao}
                     </MenuItem>
                   ))}
                 </Select>

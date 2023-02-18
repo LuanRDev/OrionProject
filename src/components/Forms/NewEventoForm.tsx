@@ -43,6 +43,7 @@ const adicionarEventoFormSchema = z.object({
 type AdicionarEventoFormInput = z.infer<typeof adicionarEventoFormSchema>;
 
 const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
+  console.log(TiposEventos);
   const [filesNames, setFilesNames] = useState<string[]>([]);
   const [filesBase64, setFilesBase64] = useState<string[]>([]);
   const [openModal, setOpenModal] = useState(false);
@@ -173,7 +174,7 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
                 <Select onChange={handleChange} defaultValue={'1'}>
                   {TiposEventos.map((tipo) => (
                     <MenuItem value={tipo.id} key={tipo.id}>
-                      {tipo.tipoEvento}
+                      {tipo.tipoDescricao}
                     </MenuItem>
                   ))}
                 </Select>

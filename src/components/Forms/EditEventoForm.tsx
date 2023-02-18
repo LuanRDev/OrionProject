@@ -192,8 +192,8 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
                 />
                 <Select onChange={handleChange} defaultValue={'1'}>
                   {TiposEventos.map((tipo, index) => (
-                    <MenuItem value={tipo.codigoTipo} key={index}>
-                      {tipo.tipoEvento}
+                    <MenuItem value={tipo.id} key={index}>
+                      {tipo.tipoDescricao}
                     </MenuItem>
                   ))}
                 </Select>
