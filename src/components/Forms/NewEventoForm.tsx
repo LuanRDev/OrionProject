@@ -43,7 +43,6 @@ const adicionarEventoFormSchema = z.object({
 type AdicionarEventoFormInput = z.infer<typeof adicionarEventoFormSchema>;
 
 const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
-  console.log(TiposEventos);
   const [filesNames, setFilesNames] = useState<string[]>([]);
   const [filesBase64, setFilesBase64] = useState<string[]>([]);
   const [openModal, setOpenModal] = useState(false);
