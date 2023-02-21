@@ -15,7 +15,7 @@ import SuspenseLoader from '../../../components/SuspenseLoader';
 interface Tempo {
   UltimaSemana: number[];
   UltimoMes: number[];
-  UltimosTresMeses: number[];
+  UltimoTrimestre: number[];
 }
 
 function DashboardCrypto() {

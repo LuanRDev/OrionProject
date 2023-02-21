@@ -48,7 +48,7 @@ interface GraficoParams {
 interface Tempo {
   UltimaSemana: number[];
   UltimoMes: number[];
-  UltimosTresMeses: number[];
+  UltimoTrimestre: number[];
 }
 
 function GraficosListaColuna({ DadosGrafico }: GraficoParams) {
@@ -148,7 +148,7 @@ function GraficosListaColuna({ DadosGrafico }: GraficoParams) {
   const chart3Data = [
     {
       name: 'Últimos 3 meses',
-      data: DadosGrafico.UltimosTresMeses
+      data: DadosGrafico.UltimoTrimestre
     }
   ];
 
