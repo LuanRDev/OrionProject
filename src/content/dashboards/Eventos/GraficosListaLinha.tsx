@@ -52,9 +52,9 @@ interface GraficoParams {
 }
 
 interface Tempo {
-  UltimaSemana: number[];
-  UltimoMes: number[];
-  UltimoTrimestre: number[];
+  ultimaSemana: number[];
+  ultimoMes: number[];
+  ultimoTrimestre: number[];
 }
 
 function GraficosListaLinha({ DadosGrafico }: GraficoParams) {
@@ -77,13 +77,13 @@ function GraficosListaLinha({ DadosGrafico }: GraficoParams) {
       }
     },
     labels: [
-      'Monday',
-      'Tueday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday'
+      'Segunda',
+      'Terça',
+      'Quarta',
+      'Quinta',
+      'Sexta',
+      'Sábado',
+      'Domingo'
     ],
     stroke: {
       curve: 'smooth',
@@ -115,7 +115,7 @@ function GraficosListaLinha({ DadosGrafico }: GraficoParams) {
       y: {
         title: {
           formatter: function () {
-            return 'Price: $';
+            return 'Confirmados: ';
           }
         }
       },
@@ -128,21 +128,21 @@ function GraficosListaLinha({ DadosGrafico }: GraficoParams) {
   const Box1Data = [
     {
       name: 'Última Semana',
-      data: DadosGrafico.UltimaSemana
+      data: DadosGrafico.ultimaSemana
     }
   ];
 
   const Box2Data = [
     {
       name: 'Último Mês',
-      data: DadosGrafico.UltimoMes
+      data: DadosGrafico.ultimoMes
     }
   ];
 
   const Box3Data = [
     {
       name: 'Últimos Três Meses',
-      data: DadosGrafico.UltimoTrimestre
+      data: DadosGrafico.ultimoTrimestre
     }
   ];
 

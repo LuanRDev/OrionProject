@@ -46,9 +46,9 @@ interface GraficoParams {
 }
 
 interface Tempo {
-  UltimaSemana: number[];
-  UltimoMes: number[];
-  UltimoTrimestre: number[];
+  ultimaSemana: number[];
+  ultimoMes: number[];
+  ultimoTrimestre: number[];
 }
 
 function GraficosListaColuna({ DadosGrafico }: GraficoParams) {
@@ -94,13 +94,13 @@ function GraficosListaColuna({ DadosGrafico }: GraficoParams) {
       show: false
     },
     labels: [
-      'Monday',
-      'Tueday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday'
+      'Segunda',
+      'Terça',
+      'Quarta',
+      'Quinta',
+      'Sexta',
+      'Sábado',
+      'Domingo'
     ],
     xaxis: {
       labels: {
@@ -124,7 +124,7 @@ function GraficosListaColuna({ DadosGrafico }: GraficoParams) {
       y: {
         title: {
           formatter: function () {
-            return 'Price: $';
+            return 'Confirmados: ';
           }
         }
       },
@@ -136,19 +136,19 @@ function GraficosListaColuna({ DadosGrafico }: GraficoParams) {
   const chart1Data = [
     {
       name: 'Última semana',
-      data: DadosGrafico.UltimaSemana
+      data: DadosGrafico.ultimaSemana
     }
   ];
   const chart2Data = [
     {
       name: 'Último mês',
-      data: DadosGrafico.UltimoMes
+      data: DadosGrafico.ultimoMes
     }
   ];
   const chart3Data = [
     {
       name: 'Últimos 3 meses',
-      data: DadosGrafico.UltimoTrimestre
+      data: DadosGrafico.ultimoTrimestre
     }
   ];
 

@@ -25,9 +25,9 @@ interface GraficoParams {
 }
 
 interface Tempo {
-  UltimaSemana: number[];
-  UltimoMes: number[];
-  UltimoTrimestre: number[];
+  ultimaSemana: number[];
+  ultimoMes: number[];
+  ultimoTrimestre: number[];
 }
 function GraficosLista({ DadosGrafico }: GraficoParams) {
   const [tabs, setTab] = useState<string | null>('watch_list_columns');
