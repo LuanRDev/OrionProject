@@ -13,9 +13,9 @@ import { TipoEvento } from '../../../models/tipo_evento';
 import SuspenseLoader from '../../../components/SuspenseLoader';
 
 interface Tempo {
-  UltimaSemana: number[];
-  UltimoMes: number[];
-  UltimoTrimestre: number[];
+  ultimaSemana: number[];
+  ultimoMes: number[];
+  ultimoTrimestre: number[];
 }
 
 function DashboardCrypto() {
@@ -60,7 +60,9 @@ function DashboardCrypto() {
   if (isLoading === true) {
     return <SuspenseLoader />;
   }
-  return eventos.length !== 0 && tiposEventos.length !== 0 ? (
+  return eventos.length !== 0 &&
+    tiposEventos.length !== 0 &&
+    dadosGrafico !== undefined ? (
     <>
       <Helmet>
         <title>Dashboard - Projeto Orion</title>
