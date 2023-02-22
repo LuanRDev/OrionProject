@@ -7,9 +7,6 @@ import {
   Avatar,
   useTheme,
   styled,
-  ListItemText,
-  List,
-  ListItem,
   Grid
 } from '@mui/material';
 import Chart from 'react-apexcharts';
@@ -38,12 +35,12 @@ function EventoInformation({ Evento }: PropsEvento) {
   const theme = useTheme();
 
   const chartOptions: ApexOptions = {
-    series: [44, 65],
+    series: [Evento.participantesEsperados, Evento.participacoesConfirmadas],
     chart: {
       width: 320,
       type: 'pie'
     },
-    labels: ['Team A', 'Team B'],
+    labels: ['Esperados', 'Confirmados'],
     responsive: [
       {
         breakpoint: 480,
@@ -58,7 +55,6 @@ function EventoInformation({ Evento }: PropsEvento) {
       }
     ]
   };
-  const chart1Data = [44, 65];
   return (
     <Card>
       <CardHeader title="Informações Gerais" />
@@ -154,7 +150,11 @@ function EventoInformation({ Evento }: PropsEvento) {
             </Box>
           </Box>
           <Grid item md={4} xs={4} sm={4}>
-            <Chart options={chartOptions} series={chart1Data} type="pie" />
+            <Chart
+              options={chartOptions}
+              series={chartOptions.series}
+              type="pie"
+            />
           </Grid>
         </Box>
       </Box>
@@ -165,9 +165,8 @@ function EventoInformation({ Evento }: PropsEvento) {
         </AvatarPrimary>
         <Box pl={2} flex={1}>
           <Typography variant="h3">Conteúdo do evento</Typography>
-
-          <Box pt={1} display="flex">
-            <Box>
+          <Box pt={2} display="flex">
+            <Box pr={4}>
               <Typography
                 gutterBottom
                 variant="caption"
@@ -175,13 +174,15 @@ function EventoInformation({ Evento }: PropsEvento) {
               >
                 Arquivos
               </Typography>
-              {Evento.conteudoEvento?.map((arquivo) => (
-                <Typography mb={0.5} key={arquivo.nome}>
-                  <a href={arquivo.url}>{arquivo.nome}</a>
-                </Typography>
-              ))}
+              <Typography variant="h4">
+                {Evento.conteudoEventos?.map((arquivo) => (
+                  <Typography mb={0.5} key={arquivo.name}>
+                    <a href={arquivo.url}>{arquivo.name}</a>
+                  </Typography>
+                ))}
+              </Typography>
             </Box>
-            <Box pr={4}>
+            <Box>
               <Typography
                 gutterBottom
                 variant="caption"
@@ -190,7 +191,7 @@ function EventoInformation({ Evento }: PropsEvento) {
                 Quantidade
               </Typography>
               <Typography variant="h4">
-                {Evento.conteudoEvento?.length}
+                {Evento.conteudoEventos?.length}
               </Typography>
             </Box>
           </Box>
