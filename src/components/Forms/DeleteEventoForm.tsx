@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { apiEventos } from '../../core/services/api/axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -30,7 +30,7 @@ const DeleteEventoForm = ({ id }: DeleteEventoProps) => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const navigate = useNavigate();
-
+  const location = useLocation();
   const handleClose = () => {
     setOpenDialog(false);
   };
@@ -66,6 +66,9 @@ const DeleteEventoForm = ({ id }: DeleteEventoProps) => {
     try {
       await apiEventos.delete(`/api/eventos/${id}`);
       handleClose();
+      if (location.pathname == `/management/eventos/${id}`) {
+        navigate('/management/eventos');
+      }
       navigate(0);
     } catch (error) {
       handleClose();
