@@ -130,7 +130,7 @@ const NewEventoFormCard = ({ TiposEventos }: PropsNovoEvento) => {
         dataRealizado,
         cargaHoraria,
         participantesEsperados,
-        conteudoEvento: filesBase64
+        arquivosBase64: filesBase64
       });
       setFilesBase64([]);
       setFilesNames([]);
@@ -185,7 +185,7 @@ const NewEventoFormCard = ({ TiposEventos }: PropsNovoEvento) => {
                 <TextField type={'text'} {...register('descricao')} multiline />
               </Typography>
               <Typography variant="h6">
-                Carga Horária:
+                Carga Horária (Horas):
                 <br />
                 <TextField
                   type={'number'}
@@ -201,7 +201,7 @@ const NewEventoFormCard = ({ TiposEventos }: PropsNovoEvento) => {
                 Participantes esperados:
                 <br />
                 <TextField
-                  type={'text'}
+                  type={'number'}
                   {...register('participantesEsperados', {
                     valueAsNumber: true
                   })}
