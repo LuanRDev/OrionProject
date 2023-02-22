@@ -144,7 +144,7 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
         dataRealizado,
         cargaHoraria,
         participantesEsperados,
-        conteudoEvento: filesBase64
+        arquivosBase64: filesBase64
       });
       handleClose();
       navigate(0);
@@ -221,7 +221,7 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
                 />
               </Typography>
               <Typography variant="h6">
-                Carga Horária:
+                Carga Horária (Horas):
                 <br />
                 <TextField
                   type={'number'}
