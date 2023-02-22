@@ -1,4 +1,4 @@
 export interface ConteudoEvento {
-  nome: string;
+  name: string;
   url: string;
 }

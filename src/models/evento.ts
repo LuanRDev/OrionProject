@@ -11,5 +11,5 @@ export interface Evento {
   participantesEsperados: number;
   participacoesConfirmadas: number;
   inativo: boolean;
-  conteudoEvento: ConteudoEvento[];
+  conteudoEventos: ConteudoEvento[];
 }
