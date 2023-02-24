@@ -170,6 +170,15 @@ const routes: RouteObject[] = [
     ]
   },
   {
+    path: '/teste',
+    children: [
+      {
+        path: '',
+        element: <UserSettings />
+      }
+    ]
+  },
+  {
     path: '/components',
     element: <SidebarLayout />,
     children: [
