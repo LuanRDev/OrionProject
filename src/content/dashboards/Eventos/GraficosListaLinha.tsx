@@ -18,6 +18,7 @@ import type { ApexOptions } from 'apexcharts';
 import TrendingDownTwoToneIcon from '@mui/icons-material/TrendingDownTwoTone';
 import TrendingUpTwoToneIcon from '@mui/icons-material/TrendingUpTwoTone';
 import TrendingFlatTwoToneIcon from '@mui/icons-material/TrendingFlatTwoTone';
+import Link from '../../../components/Link';
 
 const AvatarWrapper = styled(Avatar)(
   ({ theme }) => `
@@ -354,7 +355,11 @@ function GraficosListaLinha({ DadosGrafico }: GraficoParams) {
           justifyContent: 'center'
         }}
       >
-        <Button variant="outlined">Visualizar todas participações</Button>
+        <Button variant="outlined">
+          <Link to={'/management/participantes'}>
+            Visualizar todas participações
+          </Link>
+        </Button>
       </CardActions>
     </Card>
   );

@@ -77,7 +77,7 @@ function Status500() {
                   src="/static/images/status/500.svg"
                 />
                 <Typography variant="h2" sx={{ my: 2 }}>
-                  There was an error, please try again later
+                  Ocorreu um erro, tente novamente mais tarde.
                 </Typography>
                 <Typography
                   variant="h4"
@@ -85,8 +85,8 @@ function Status500() {
                   fontWeight="normal"
                   sx={{ mb: 4 }}
                 >
-                  The server encountered an internal error and was not able to
-                  complete your request
+                  O servidor encontrou um erro interno, por conta disso não foi
+                  possível concluir sua requisição.
                 </Typography>
                 <LoadingButton
                   onClick={handleClick}
@@ -95,7 +95,7 @@ function Status500() {
                   color="primary"
                   startIcon={<RefreshTwoToneIcon />}
                 >
-                  Refresh view
+                  Recarregar
                 </LoadingButton>
                 <Button href="/overview" variant="contained" sx={{ ml: 1 }}>
                   Go back
@@ -111,27 +111,7 @@ function Status500() {
               display="flex"
               justifyContent="center"
               item
-            >
-              <Container maxWidth="sm">
-                <Box textAlign="center">
-                  <TypographyPrimary variant="h1" sx={{ my: 2 }}>
-                    Tokyo Free White React Typescript Admin Dashboard
-                  </TypographyPrimary>
-                  <TypographySecondary
-                    variant="h4"
-                    fontWeight="normal"
-                    sx={{ mb: 4 }}
-                  >
-                    High performance React template built with lots of powerful
-                    Material-UI components across multiple product niches for
-                    fast &amp; perfect apps development processes.
-                  </TypographySecondary>
-                  <Button href="/overview" size="large" variant="contained">
-                    Overview
-                  </Button>
-                </Box>
-              </Container>
-            </GridWrapper>
+            ></GridWrapper>
           </Hidden>
         </Grid>
       </MainContent>
