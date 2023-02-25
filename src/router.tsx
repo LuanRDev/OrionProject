@@ -30,6 +30,9 @@ const EventosApplication = Loader(
 const EventosDetails = Loader(
   lazy(() => import('./content/applications/EventosDetails'))
 );
+const RegistrarParticipacao = Loader(
+  lazy(() => import('./content/applications/RegistrarParticipacao'))
+);
 const UserProfile = Loader(
   lazy(() => import('./content/applications/Users/profile'))
 );
@@ -170,13 +173,17 @@ const routes: RouteObject[] = [
     ]
   },
   {
-    path: '/teste',
+    path: '/eventos',
     children: [
       {
-        path: '',
-        element: <UserSettings />
+        path: ':id/registrar-participacao',
+        element: <RegistrarParticipacao />
       }
     ]
+  },
+  {
+    path: '/teste',
+    element: <RegistrarParticipacao />
   },
   {
     path: '/components',
