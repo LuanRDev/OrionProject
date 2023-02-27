@@ -74,11 +74,14 @@ const StatusComingSoon = Loader(
 const StatusMaintenance = Loader(
   lazy(() => import('./content/pages/Status/Maintenance'))
 );
+const SuccessRegister = Loader(
+  lazy(() => import('./content/pages/Status/SuccessRegister'))
+);
 
-const routes: RouteObject[] = [
+const routes = (isLogged): RouteObject[] => [
   {
     path: '',
-    element: <BaseLayout />,
+    element: !isLogged ? <SidebarLayout /> : <BaseLayout />,
     children: [
       {
         path: '/',
@@ -110,6 +113,10 @@ const routes: RouteObject[] = [
           {
             path: 'coming-soon',
             element: <StatusComingSoon />
+          },
+          {
+            path: 'register-success',
+            element: <SuccessRegister />
           }
         ]
       },
@@ -121,7 +128,7 @@ const routes: RouteObject[] = [
   },
   {
     path: 'dashboards',
-    element: <SidebarLayout />,
+    element: !isLogged ? <BaseLayout /> : <SidebarLayout />,
     children: [
       {
         path: '',
@@ -135,7 +142,7 @@ const routes: RouteObject[] = [
   },
   {
     path: 'management',
-    element: <SidebarLayout />,
+    element: !isLogged ? <BaseLayout /> : <SidebarLayout />,
     children: [
       {
         path: '',
@@ -180,10 +187,6 @@ const routes: RouteObject[] = [
         element: <RegistrarParticipacao />
       }
     ]
-  },
-  {
-    path: '/teste',
-    element: <RegistrarParticipacao />
   },
   {
     path: '/components',
