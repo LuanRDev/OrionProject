@@ -44,10 +44,10 @@ function ApplicationRegistrarParticipacao() {
   return eventomock !== undefined && eventomock.id !== undefined ? (
     <>
       <Helmet>
-        <title>teste</title>
+        <title>Registrar Participação</title>
       </Helmet>
       <PageTitleWrapper>
-        <PageHeader />
+        <PageHeader Evento={eventomock} />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid

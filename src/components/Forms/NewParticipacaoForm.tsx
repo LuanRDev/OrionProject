@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Typography, TextField, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { apiEventos } from '../../core/services/api/axios';
+import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 interface PropsNewParticipacao {
@@ -10,13 +11,14 @@ interface PropsNewParticipacao {
 
 const registrarParticipacaoFormSchema = z.object({
   nomeParticipante: z.string(),
-  documentoParticipante: z.string()
+  documentoParticipante: z.number()
 });
 
 type RegistrarParticipacaoFormInput = z.infer<
   typeof registrarParticipacaoFormSchema
 >;
 const NewParticipacaoForm = ({ CodigoEvento }: PropsNewParticipacao) => {
+  const navigate = useNavigate();
   const {
     reset,
     register,
@@ -39,6 +41,7 @@ const NewParticipacaoForm = ({ CodigoEvento }: PropsNewParticipacao) => {
           documentoParticipante
         }
       );
+      navigate('/status/register-success');
     } catch (error) {
       console.log(error);
     }
@@ -50,16 +53,15 @@ const NewParticipacaoForm = ({ CodigoEvento }: PropsNewParticipacao) => {
       <Typography variant="body1">
         Nome
         <br />
-        <TextField type={'text'} {...register('nomeParticipante')} />
+        <TextField type={'text'} {...register('nomeParticipante')} required />
       </Typography>
       <Typography variant="body1">
-        Documento
+        Documento (CPF)
         <br />
         <TextField
-          type={'text'}
-          {...register('documentoParticipante', {
-            valueAsNumber: true
-          })}
+          type={'number'}
+          {...register('documentoParticipante')}
+          required
         />
       </Typography>
       <Button size="large" type="submit" disabled={isSubmitting}>
