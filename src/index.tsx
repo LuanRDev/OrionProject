@@ -7,9 +7,14 @@ import App from '../src/App';
 import { SidebarProvider } from '../src/contexts/SidebarContext';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import { initialConfig, keycloak } from './core/auth';
+import SuspenseLoader from './components/SuspenseLoader';
 
 ReactDOM.render(
-  <ReactKeycloakProvider authClient={keycloak} initOptions={initialConfig}>
+  <ReactKeycloakProvider
+    authClient={keycloak}
+    initOptions={initialConfig}
+    LoadingComponent={<SuspenseLoader />}
+  >
     <HelmetProvider>
       <SidebarProvider>
         <BrowserRouter>
@@ -17,6 +22,7 @@ ReactDOM.render(
         </BrowserRouter>
       </SidebarProvider>
     </HelmetProvider>
+    ,
   </ReactKeycloakProvider>,
   document.getElementById('root')
 );

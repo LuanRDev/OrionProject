@@ -7,5 +7,5 @@ export const keycloak = new Keycloak({
 });
 
 export const initialConfig = {
-  onload: 'login-required'
+  onLoad: 'login-required'
 };
