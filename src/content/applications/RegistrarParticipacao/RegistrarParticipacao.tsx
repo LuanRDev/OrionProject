@@ -32,20 +32,7 @@ function RegistrarParticipacao({ Evento }: PropsEvento) {
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
-  const docs = [
-    {
-      uri: 'https://byslxpmznwhzjihwispj.supabase.co/storage/v1/object/public/eventos/signup-diagram.pdf'
-    },
-    {
-      uri: 'https://byslxpmznwhzjihwispj.supabase.co/storage/v1/object/public/eventos/json_painel_expedicao.txt'
-    },
-    {
-      uri: 'https://byslxpmznwhzjihwispj.supabase.co/storage/v1/object/public/eventos/Relatorio.xls'
-    },
-    {
-      uri: 'https://www.youtube.com/watch?v=o3L88MXib9c'
-    }
-  ];
+  const docs = Evento.conteudoEventos.map((arquivo) => ({ uri: arquivo.url }));
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -92,11 +79,13 @@ function RegistrarParticipacao({ Evento }: PropsEvento) {
                     pré-visualização, nesses casos é recomendado abrir
                     diretamente o link dos arquivos.
                   </Typography>
-                  <DocViewer
-                    documents={docs}
-                    pluginRenderers={DocViewerRenderers}
-                    language={'pt'}
-                  />
+                  <Box height={'15vh'}>
+                    <DocViewer
+                      documents={docs}
+                      pluginRenderers={DocViewerRenderers}
+                      language={'pt'}
+                    />
+                  </Box>
                 </Stack>
                 <Divider />
                 <Stack marginTop={2}>

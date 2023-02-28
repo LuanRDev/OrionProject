@@ -11,23 +11,10 @@ import SuspenseLoader from '../../../components/SuspenseLoader';
 
 function ApplicationRegistrarParticipacao() {
   const [isLoading, setIsLoading] = useState(false);
-  //const [evento, setEvento] = useState<Evento>();
-  const eventomock: Evento = {
-    id: 1,
-    cargaHoraria: 2,
-    dataRealizado: '2323',
-    conteudoEventos: [],
-    descricao: '',
-    empresa: 'teste',
-    inativo: false,
-    instrutor: 'luna',
-    participacoesConfirmadas: 2,
-    participantesEsperados: 10,
-    tipoEvento: 2
-  };
+  const [evento, setEvento] = useState<Evento>();
   const { id } = useParams();
 
-  /*useEffect(() => {
+  useEffect(() => {
     async function getData() {
       try {
         await apiEventos.get(`/api/eventos/${id}`).then((result) => {
@@ -40,14 +27,14 @@ function ApplicationRegistrarParticipacao() {
       }
     }
     getData();
-  }, []);*/
-  return eventomock !== undefined && eventomock.id !== undefined ? (
+  }, []);
+  return evento !== undefined && evento.id !== undefined ? (
     <>
       <Helmet>
         <title>Registrar Participação</title>
       </Helmet>
       <PageTitleWrapper>
-        <PageHeader Evento={eventomock} />
+        <PageHeader Evento={evento} />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid
@@ -58,7 +45,7 @@ function ApplicationRegistrarParticipacao() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <RegistrarParticipacao Evento={eventomock} />
+            <RegistrarParticipacao Evento={evento} />
           </Grid>
         </Grid>
       </Container>
