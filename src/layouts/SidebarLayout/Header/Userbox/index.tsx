@@ -22,6 +22,7 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
+import { useKeycloak } from '@react-keycloak/web';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -64,7 +65,7 @@ function HeaderUserbox() {
     avatar: '/static/images/avatars/1.jpg',
     jobtitle: 'Project Manager'
   };
-
+  const { keycloak } = useKeycloak();
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
 
@@ -131,9 +132,9 @@ function HeaderUserbox() {
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>
-          <Button color="primary" fullWidth>
+          <Button color="primary" fullWidth onClick={() => keycloak.logout()}>
             <LockOpenTwoToneIcon sx={{ mr: 1 }} />
-            Sign out
+            Sair
           </Button>
         </Box>
       </Popover>

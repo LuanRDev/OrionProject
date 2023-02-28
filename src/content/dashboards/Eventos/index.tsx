@@ -7,10 +7,11 @@ import Footer from '../../../components/Footer';
 import Eventos from './Eventos';
 import GraficosLista from './GraficosLista';
 import { apiEventos } from '../../../core/services/api/axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Evento } from '../../../models/evento';
 import { TipoEvento } from '../../../models/tipo_evento';
 import SuspenseLoader from '../../../components/SuspenseLoader';
+import { useKeycloak } from '@react-keycloak/web';
 
 interface Tempo {
   ultimaSemana: number[];
@@ -23,6 +24,11 @@ function DashboardCrypto() {
   const [dadosGrafico, setDadosGrafico] = useState<Tempo>();
   const [tiposEventos, setTiposEventos] = useState<TipoEvento[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { keycloak } = useKeycloak();
+  const login = useCallback(() => {
+    keycloak?.login();
+  }, [keycloak]);
 
   useEffect(() => {
     async function getData() {
@@ -56,10 +62,15 @@ function DashboardCrypto() {
       getData();
     }
     setIsLoading(false);
+    // if (!keycloak?.authenticated) {
+    //   keycloak?.login();
+    // }
   }, []);
   if (isLoading === true) {
     return <SuspenseLoader />;
   }
+  console.log(keycloak?.authenticated);
+
   return eventos.length !== 0 &&
     tiposEventos.length !== 0 &&
     dadosGrafico !== undefined ? (

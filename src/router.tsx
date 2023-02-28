@@ -78,7 +78,8 @@ const SuccessRegister = Loader(
   lazy(() => import('./content/pages/Status/SuccessRegister'))
 );
 
-const routes = (isLogged): RouteObject[] => [
+const isLogged = true;
+const routes: RouteObject[] = [
   {
     path: '',
     element: !isLogged ? <SidebarLayout /> : <BaseLayout />,

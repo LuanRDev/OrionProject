@@ -5,14 +5,18 @@ import { BrowserRouter } from 'react-router-dom';
 import 'nprogress/nprogress.css';
 import App from '../src/App';
 import { SidebarProvider } from '../src/contexts/SidebarContext';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
+import { initialConfig, keycloak } from './core/auth';
 
 ReactDOM.render(
-  <HelmetProvider>
-    <SidebarProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </SidebarProvider>
-  </HelmetProvider>,
+  <ReactKeycloakProvider authClient={keycloak} initOptions={initialConfig}>
+    <HelmetProvider>
+      <SidebarProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </SidebarProvider>
+    </HelmetProvider>
+  </ReactKeycloakProvider>,
   document.getElementById('root')
 );
