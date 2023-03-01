@@ -173,7 +173,7 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
       </Snackbar>
       <Button
         size="small"
-        variant="outlined"
+        variant="contained"
         onClick={handleClickOpen}
         startIcon={<AddTwoToneIcon fontSize="small" />}
       >

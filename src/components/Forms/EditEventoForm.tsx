@@ -175,7 +175,7 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
       </Snackbar>
       <Button
         size="small"
-        variant="outlined"
+        variant="contained"
         onClick={handleClickOpen}
         startIcon={<EditIcon fontSize="small" />}
       >

@@ -106,7 +106,7 @@ const DeleteEventoForm = ({ id }: DeleteEventoProps) => {
       </Snackbar>
       <Button
         size="small"
-        variant="outlined"
+        variant="contained"
         onClick={handleClickOpen}
         startIcon={<DeleteIcon fontSize="small" />}
       >
