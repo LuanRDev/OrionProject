@@ -75,9 +75,6 @@ function ApplicationsEventos() {
       <Helmet>
         <title>Eventos - Projeto Orion</title>
       </Helmet>
-      <PageTitleWrapper>
-        <PageHeader TiposEventos={tiposEventos} />
-      </PageTitleWrapper>
       <SuspenseLoader />
     </>
   );
