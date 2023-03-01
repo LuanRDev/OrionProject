@@ -8,13 +8,15 @@ import {
   Avatar,
   Tooltip,
   CardActionArea,
-  styled
+  styled,
+  CardActions
 } from '@mui/material';
 import NewEventoForm from '../../../components/Forms/NewEventoForm';
 import { TipoEvento } from '../../../models/tipo_evento';
 import { Evento } from '../../../models/evento';
 import { ReturnEventoTipo } from '../../../components/ReturnEventoTipo';
 import NewEventoFormCard from '../../../components/Forms/NewEventoFormCard';
+import Link from '../../../components/Link';
 
 const AvatarAddWrapper = styled(Avatar)(
   ({ theme }) => `
@@ -96,6 +98,13 @@ function Eventos({ Eventos, TiposEventos }: PropsDashboardEventos) {
                   </Typography>
                 </Box>
               </CardContent>
+              <CardActions>
+                <Button size="small" variant="outlined">
+                  <Link to={`/management/eventos/${evento.id}`}>
+                    Detalhes do evento
+                  </Link>
+                </Button>
+              </CardActions>
             </Card>
           </Grid>
         ))}
