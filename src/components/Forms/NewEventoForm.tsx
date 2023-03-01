@@ -69,6 +69,9 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
   const handleClose = () => {
     setOpenDialog(false);
   };
+  const handleCloseSnack = () => {
+    setOpenSnack(false);
+  };
   const handleChange = (event: SelectChangeEvent) => {
     setSelectTipoEvento(event.target.value as string);
   };
@@ -131,7 +134,7 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
       participantesEsperados
     } = data;
     try {
-      await apiEventos.post(`/api/eventos`, {
+      await apiEventos.post(`/api/evetos`, {
         descricao,
         empresa,
         tipoEvento: selectTipoEvento,
@@ -143,27 +146,30 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
       });
       setFilesBase64([]);
       setFilesNames([]);
-      handleClose();
       navigate(0);
     } catch (error) {
       setSnackMessage('Ops! Ocorreu um erro ao adicionar o evento.');
       setOpenSnack(true);
-      handleClose();
       console.log(error);
     }
 
+    handleClose();
     reset();
   }
 
   return (
     <Stack>
       <Snackbar
-        autoHideDuration={6000}
+        autoHideDuration={2000}
         open={openSnack}
-        onClose={handleClose}
+        onClose={handleCloseSnack}
         TransitionComponent={TransitionUp}
+        sx={{ zIndex: 999 }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert severity="error">{snackMessage}</Alert>
+        <Alert severity="error" onClose={handleCloseSnack}>
+          {snackMessage}
+        </Alert>
       </Snackbar>
       <Button
         size="small"
@@ -200,6 +206,7 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
                 Data do evento:
                 <br />
                 <TextField
+                  fullWidth
                   type={'datetime-local'}
                   {...register('dataRealizado')}
                   required

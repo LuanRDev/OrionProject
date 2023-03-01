@@ -11,7 +11,11 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Stack
+  Stack,
+  Slide,
+  SlideProps,
+  Alert,
+  Snackbar
 } from '@mui/material';
 import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
@@ -30,6 +34,13 @@ export interface DialogTitleProps {
 interface PropsNovoEvento {
   TiposEventos: TipoEvento[] | undefined;
 }
+
+type TransitionProps = Omit<SlideProps, 'direction'>;
+
+function TransitionUp(props: TransitionProps) {
+  return <Slide {...props} direction="up" />;
+}
+
 const adicionarEventoFormSchema = z.object({
   descricao: z.string(),
   empresa: z.string(),
@@ -59,6 +70,9 @@ const NewEventoFormCard = ({ TiposEventos }: PropsNovoEvento) => {
   };
   const handleClose = () => {
     setOpenDialog(false);
+  };
+  const handleCloseSnack = () => {
+    setOpenSnack(false);
   };
   const handleChange = (event: SelectChangeEvent) => {
     setSelectTipoEvento(event.target.value as string);
@@ -147,6 +161,18 @@ const NewEventoFormCard = ({ TiposEventos }: PropsNovoEvento) => {
 
   return (
     <Stack>
+      <Snackbar
+        autoHideDuration={2000}
+        open={openSnack}
+        onClose={handleCloseSnack}
+        TransitionComponent={TransitionUp}
+        sx={{ zIndex: 999 }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity="error" onClose={handleCloseSnack}>
+          {snackMessage}
+        </Alert>
+      </Snackbar>
       <AddTwoToneIcon fontSize="large" onClick={handleClickOpen} />
       <Dialog
         onClose={handleClose}
@@ -175,6 +201,7 @@ const NewEventoFormCard = ({ TiposEventos }: PropsNovoEvento) => {
                 Data do evento:
                 <br />
                 <TextField
+                  fullWidth
                   type={'datetime-local'}
                   {...register('dataRealizado')}
                 />

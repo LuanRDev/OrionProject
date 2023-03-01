@@ -6,7 +6,11 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Typography
+  Typography,
+  Alert,
+  Snackbar,
+  Slide,
+  SlideProps
 } from '@mui/material';
 import { useState } from 'react';
 import { apiEventos } from '../../core/services/api/axios';
@@ -24,6 +28,12 @@ interface DeleteEventoProps {
   id: number;
 }
 
+type TransitionProps = Omit<SlideProps, 'direction'>;
+
+function TransitionUp(props: TransitionProps) {
+  return <Slide {...props} direction="up" />;
+}
+
 const DeleteEventoForm = ({ id }: DeleteEventoProps) => {
   const [snackMessage, setSnackMessage] = useState<string>('');
   const [openSnack, setOpenSnack] = useState(false);
@@ -37,6 +47,9 @@ const DeleteEventoForm = ({ id }: DeleteEventoProps) => {
 
   const handleClickOpen = () => {
     setOpenDialog(true);
+  };
+  const handleCloseSnack = () => {
+    setOpenSnack(false);
   };
 
   function CustomDialogTitle(props: DialogTitleProps) {
@@ -79,6 +92,18 @@ const DeleteEventoForm = ({ id }: DeleteEventoProps) => {
   }
   return (
     <Stack>
+      <Snackbar
+        autoHideDuration={2000}
+        open={openSnack}
+        onClose={handleCloseSnack}
+        TransitionComponent={TransitionUp}
+        sx={{ zIndex: 999 }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity="error" onClose={handleCloseSnack}>
+          {snackMessage}
+        </Alert>
+      </Snackbar>
       <Button
         size="small"
         variant="outlined"

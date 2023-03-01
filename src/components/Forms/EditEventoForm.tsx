@@ -100,6 +100,9 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
   const handleClose = () => {
     setOpenDialog(false);
   };
+  const handleCloseSnack = () => {
+    setOpenSnack(false);
+  };
 
   const {
     reset,
@@ -146,13 +149,13 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
         participantesEsperados,
         arquivosBase64: filesBase64
       });
-      handleClose();
       navigate(0);
     } catch (error) {
       setSnackMessage('Ops! Ocorreu um erro ao editar os dados do evento.');
       setOpenSnack(true);
       console.log(error);
     }
+    handleClose();
     reset();
   }
 
@@ -161,10 +164,14 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
       <Snackbar
         autoHideDuration={6000}
         open={openSnack}
-        onClose={handleClose}
+        onClose={handleCloseSnack}
         TransitionComponent={TransitionUp}
+        sx={{ zIndex: 999 }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert severity="error">{snackMessage}</Alert>
+        <Alert severity="error" onClose={handleCloseSnack}>
+          {snackMessage}
+        </Alert>
       </Snackbar>
       <Button
         size="small"
@@ -205,6 +212,7 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
                 Data do evento:
                 <br />
                 <TextField
+                  fullWidth
                   type={'datetime-local'}
                   {...register('dataRealizado')}
                   defaultValue={Evento?.dataRealizado.substring(0, 16)}
