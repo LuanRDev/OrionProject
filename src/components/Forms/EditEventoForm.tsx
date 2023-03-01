@@ -265,6 +265,20 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
                   {...register('conteudoEvento')}
                   onChange={(e) => converterArquivo(e.target.files)}
                 />
+                <br />
+                {filesNames.length > 0 ? (
+                  <Typography>
+                    Arquivos selecionados:
+                    {filesNames.map((fileName) => (
+                      <>
+                        <br />
+                        <Typography variant="caption">{fileName}</Typography>
+                      </>
+                    ))}
+                  </Typography>
+                ) : (
+                  ''
+                )}
               </Typography>
             </CardContent>
           </DialogContent>

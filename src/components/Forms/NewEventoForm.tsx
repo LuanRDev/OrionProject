@@ -134,7 +134,7 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
       participantesEsperados
     } = data;
     try {
-      await apiEventos.post(`/api/evetos`, {
+      await apiEventos.post(`/api/eventos`, {
         descricao,
         empresa,
         tipoEvento: selectTipoEvento,
@@ -255,6 +255,20 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
                   {...register('conteudoEvento')}
                   onChange={(e) => converterArquivo(e.target.files)}
                 />
+                <br />
+                {filesNames.length > 0 ? (
+                  <Typography>
+                    Arquivos selecionados:
+                    {filesNames.map((fileName) => (
+                      <>
+                        <br />
+                        <Typography variant="caption">{fileName}</Typography>
+                      </>
+                    ))}
+                  </Typography>
+                ) : (
+                  ''
+                )}
               </Typography>
             </CardContent>
           </DialogContent>
