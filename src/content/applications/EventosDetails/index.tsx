@@ -68,7 +68,15 @@ function EventosDetails() {
       <Footer />
     </>
   ) : (
-    <SuspenseLoader />
+    <>
+      <Helmet>
+        <title>Detalhes do evento - Projeto Orion</title>
+      </Helmet>
+      <PageTitleWrapper>
+        <PageHeader Evento={evento} TiposEventos={tiposEventos} />
+      </PageTitleWrapper>
+      <SuspenseLoader />
+    </>
   );
 }
 

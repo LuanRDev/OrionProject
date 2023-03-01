@@ -51,7 +51,12 @@ function ApplicationRegistrarParticipacao() {
       </Container>
     </>
   ) : (
-    <SuspenseLoader />
+    <>
+      <Helmet>
+        <title>Registrar Participação</title>
+      </Helmet>
+      <SuspenseLoader />
+    </>
   );
 }
 

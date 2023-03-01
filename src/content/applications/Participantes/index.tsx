@@ -54,7 +54,15 @@ function ApplicationsParticipantes() {
       <Footer />
     </>
   ) : (
-    <SuspenseLoader />
+    <>
+      <Helmet>
+        <title>Participantes - Projeto Orion</title>
+      </Helmet>
+      <PageTitleWrapper>
+        <PageHeader />
+      </PageTitleWrapper>
+      <SuspenseLoader />
+    </>
   );
 }
 

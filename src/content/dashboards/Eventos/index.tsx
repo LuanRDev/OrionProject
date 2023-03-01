@@ -100,7 +100,15 @@ function DashboardCrypto() {
       <Footer />
     </>
   ) : (
-    <SuspenseLoader />
+    <>
+      <Helmet>
+        <title>Dashboard - Projeto Orion</title>
+      </Helmet>
+      <PageTitleWrapper>
+        <PageHeader />
+      </PageTitleWrapper>
+      <SuspenseLoader />
+    </>
   );
 }
 
