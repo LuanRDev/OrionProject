@@ -37,14 +37,14 @@ function EventosApplication({ Eventos }: EventosApplicationProps) {
                 <br />
                 {evento.descricao}
               </Typography>
-              <Typography maxWidth={'12vw'} marginBottom={0.5}>
+              <Typography width={'7vw'} marginBottom={0.5}>
                 <Button size="small" variant="outlined">
                   <Link to={`/management/eventos/${evento.id}`}>
                     Ver Detalhes
                   </Link>
                 </Button>
               </Typography>
-              <Typography width={'12vw'}>
+              <Typography width={'8vw'}>
                 <DeleteEventoForm id={evento.id} />
               </Typography>
             </CardContent>
