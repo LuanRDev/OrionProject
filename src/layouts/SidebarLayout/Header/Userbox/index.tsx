@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { NavLink } from 'react-router-dom';
 
@@ -23,6 +23,7 @@ import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
 import { useKeycloak } from '@react-keycloak/web';
+import jwt_decode from 'jwt-decode';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -60,15 +61,18 @@ const UserBoxDescription = styled(Typography)(
 );
 
 function HeaderUserbox() {
-  const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg',
-    jobtitle: 'Project Manager'
-  };
   const { keycloak } = useKeycloak();
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
+  const [username, setUsername] = useState('');
 
+  useEffect(() => {
+    async function getUserInfo() {
+      const decoded: any = jwt_decode(keycloak?.token!);
+      setUsername(decoded.given_name);
+    }
+    getUserInfo();
+  }, [keycloak?.token, username]);
   const handleOpen = (): void => {
     setOpen(true);
   };
@@ -80,12 +84,12 @@ function HeaderUserbox() {
   return (
     <>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+        <Avatar variant="rounded" alt={username} />
         <Hidden mdDown>
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
+            <UserBoxLabel variant="body1">{username}</UserBoxLabel>
             <UserBoxDescription variant="body2">
-              {user.jobtitle}
+              Gerente de projeto
             </UserBoxDescription>
           </UserBoxText>
         </Hidden>
@@ -107,11 +111,11 @@ function HeaderUserbox() {
         }}
       >
         <MenuUserBox sx={{ minWidth: 210 }} display="flex">
-          <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+          <Avatar variant="rounded" alt={username} />
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
+            <UserBoxLabel variant="body1">{username}</UserBoxLabel>
             <UserBoxDescription variant="body2">
-              {user.jobtitle}
+              Gerente de projeto
             </UserBoxDescription>
           </UserBoxText>
         </MenuUserBox>
@@ -119,7 +123,7 @@ function HeaderUserbox() {
         <List sx={{ p: 1 }} component="nav">
           <ListItem button to="/management/profile/details" component={NavLink}>
             <AccountBoxTwoToneIcon fontSize="small" />
-            <ListItemText primary="My Profile" />
+            <ListItemText primary="Meu Perfil" />
           </ListItem>
           <ListItem
             button
@@ -127,7 +131,7 @@ function HeaderUserbox() {
             component={NavLink}
           >
             <AccountTreeTwoToneIcon fontSize="small" />
-            <ListItemText primary="Account Settings" />
+            <ListItemText primary="Configurações da Conta" />
           </ListItem>
         </List>
         <Divider />
