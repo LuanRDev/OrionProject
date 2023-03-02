@@ -24,7 +24,7 @@ function ApplicationRegistrarParticipacao() {
         });
       } catch (error) {
         if (error.response.status == 404) {
-          navigate('/404');
+          navigate('/status/404');
         }
         console.log(error);
       }

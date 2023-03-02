@@ -6,6 +6,8 @@ import SidebarLayout from './layouts/SidebarLayout';
 import BaseLayout from './layouts/BaseLayout';
 
 import SuspenseLoader from './components/SuspenseLoader';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
+import { initialConfig, keycloak } from './core/auth';
 
 const Loader = (Component: any) => (props: any) =>
   (
@@ -61,7 +63,6 @@ const Cards = Loader(lazy(() => import('./content/pages/Components/Cards')));
 const Forms = Loader(lazy(() => import('./content/pages/Components/Forms')));
 
 // Status
-
 const Status404 = Loader(
   lazy(() => import('./content/pages/Status/Status404'))
 );
@@ -78,103 +79,83 @@ const SuccessRegister = Loader(
   lazy(() => import('./content/pages/Status/SuccessRegister'))
 );
 
-const isLogged = true;
 const routes: RouteObject[] = [
   {
-    path: '',
-    element: !isLogged ? <SidebarLayout /> : <BaseLayout />,
+    element: (
+      <ReactKeycloakProvider
+        authClient={keycloak}
+        initOptions={initialConfig}
+        LoadingComponent={<SuspenseLoader />}
+      />
+    ),
     children: [
       {
-        path: '/',
-        element: <Navigate to="/dashboards/eventos" replace />
-      },
-      {
-        path: 'eventos',
-        element: <Navigate to="/dashboards/eventos" replace />
-      },
-      {
-        path: 'status',
+        element: <SidebarLayout />,
         children: [
           {
-            path: '',
-            element: <Navigate to="404" replace />
+            path: '/',
+            element: <Navigate to="/dashboards/eventos" replace />
           },
           {
-            path: '404',
+            path: 'eventos',
+            element: <Navigate to="/dashboards/eventos" replace />
+          },
+          {
+            path: '*',
             element: <Status404 />
-          },
-          {
-            path: '500',
-            element: <Status500 />
-          },
-          {
-            path: 'maintenance',
-            element: <StatusMaintenance />
-          },
-          {
-            path: 'coming-soon',
-            element: <StatusComingSoon />
-          },
-          {
-            path: 'register-success',
-            element: <SuccessRegister />
           }
         ]
       },
       {
-        path: '*',
-        element: <Status404 />
-      }
-    ]
-  },
-  {
-    path: 'dashboards',
-    element: !isLogged ? <BaseLayout /> : <SidebarLayout />,
-    children: [
-      {
-        path: '',
-        element: <Navigate to="eventos" replace />
-      },
-      {
-        path: 'eventos',
-        element: <Evento />
-      }
-    ]
-  },
-  {
-    path: 'management',
-    element: !isLogged ? <BaseLayout /> : <SidebarLayout />,
-    children: [
-      {
-        path: '',
-        element: <Navigate to="participantes" replace />
-      },
-      {
-        path: 'participantes',
-        element: <Participantes />
-      },
-      {
-        path: 'eventos',
-        element: <EventosApplication />
-      },
-      {
-        path: 'eventos/:id',
-        element: <EventosDetails />
-      },
-      {
-        path: 'profile',
+        path: 'dashboards',
+        element: <SidebarLayout />,
         children: [
           {
             path: '',
-            element: <Navigate to="details" replace />
+            element: <Navigate to="eventos" replace />
           },
           {
-            path: 'details',
-            element: <UserProfile />
+            path: 'eventos',
+            element: <Evento />
+          }
+        ]
+      },
+      {
+        path: 'management',
+        element: <SidebarLayout />,
+        children: [
+          {
+            path: '',
+            element: <Navigate to="participantes" replace />
           },
           {
-            path: 'settings',
-            element: <UserSettings />
+            path: 'participantes',
+            element: <Participantes />
+          },
+          {
+            path: 'eventos',
+            element: <EventosApplication />
+          },
+          {
+            path: 'eventos/:id',
+            element: <EventosDetails />
+          },
+          {
+            path: 'profile',
+            children: [
+              {
+                path: '',
+                element: <Navigate to="details" replace />
+              },
+              {
+                path: 'details',
+                element: <UserProfile />
+              },
+              {
+                path: 'settings',
+                element: <UserSettings />
+              }
+            ]
           }
         ]
       }
@@ -182,6 +163,7 @@ const routes: RouteObject[] = [
   },
   {
     path: '/eventos',
+    element: <BaseLayout />,
     children: [
       {
         path: ':id/registrar-participacao',
@@ -189,9 +171,39 @@ const routes: RouteObject[] = [
       }
     ]
   },
+  ,
+  {
+    path: 'status',
+    children: [
+      {
+        path: '',
+        element: <Navigate to="404" replace />
+      },
+      {
+        path: '404',
+        element: <Status404 />
+      },
+      {
+        path: '500',
+        element: <Status500 />
+      },
+      {
+        path: 'maintenance',
+        element: <StatusMaintenance />
+      },
+      {
+        path: 'coming-soon',
+        element: <StatusComingSoon />
+      },
+      {
+        path: 'register-success',
+        element: <SuccessRegister />
+      }
+    ]
+  },
   {
     path: '/components',
-    element: <SidebarLayout />,
+    element: <BaseLayout />,
     children: [
       {
         path: '',

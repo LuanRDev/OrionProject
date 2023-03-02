@@ -6,13 +6,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 
 import { CssBaseline } from '@mui/material';
 import ThemeProvider from './theme/ThemeProvider';
-import { useKeycloak } from '@react-keycloak/web';
-import SuspenseLoader from './components/SuspenseLoader';
 
 function App() {
-  const initialized = useKeycloak();
   const content = useRoutes(router);
-  if (!initialized) return <SuspenseLoader />;
   return (
     <ThemeProvider>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
