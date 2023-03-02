@@ -34,7 +34,7 @@ function ApplicationRegistrarParticipacao() {
         <title>Registrar Participação</title>
       </Helmet>
       <PageTitleWrapper>
-        <PageHeader Evento={evento} />
+        <PageHeader />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid
