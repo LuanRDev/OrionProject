@@ -160,7 +160,7 @@ const NovoEventoForm = ({ TiposEventos }: PropsNovoEvento) => {
   return (
     <Stack>
       <Snackbar
-        autoHideDuration={2000}
+        autoHideDuration={6000}
         open={openSnack}
         onClose={handleCloseSnack}
         TransitionComponent={TransitionUp}

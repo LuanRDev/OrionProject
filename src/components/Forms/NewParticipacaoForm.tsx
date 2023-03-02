@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { apiEventos } from '../../core/services/api/axios';
+import { apiEventos, apiParticipantes } from '../../core/services/api/axios';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
@@ -54,13 +54,12 @@ const NewParticipacaoForm = ({ CodigoEvento }: PropsNewParticipacao) => {
     const { nomeParticipante, documentoParticipante } = data;
 
     try {
-      await apiEventos.post(
-        `api/eventos/${CodigoEvento}/registrar-participacao`,
-        {
-          nomeParticipante,
-          documentoParticipante
-        }
-      );
+      await apiParticipantes.post(`api/participantes`, {
+        nome: nomeParticipante,
+        cpf: documentoParticipante.toString(),
+        codigoEvento: CodigoEvento,
+        dataParticipacao: new Date(Date.now()).toJSON()
+      });
       navigate('/status/register-success');
     } catch (error) {
       setSnackMessage('Ops! Ocorreu um erro ao registrar sua participação.');
@@ -73,7 +72,7 @@ const NewParticipacaoForm = ({ CodigoEvento }: PropsNewParticipacao) => {
   return (
     <Stack>
       <Snackbar
-        autoHideDuration={2000}
+        autoHideDuration={6000}
         open={openSnack}
         onClose={handleCloseSnack}
         TransitionComponent={TransitionUp}
@@ -95,7 +94,7 @@ const NewParticipacaoForm = ({ CodigoEvento }: PropsNewParticipacao) => {
           <br />
           <TextField
             type={'number'}
-            {...register('documentoParticipante')}
+            {...register('documentoParticipante', { valueAsNumber: true })}
             required
           />
         </Typography>
