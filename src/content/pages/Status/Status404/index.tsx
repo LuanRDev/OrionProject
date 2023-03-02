@@ -42,7 +42,7 @@ function Status404() {
   return (
     <>
       <Helmet>
-        <title>Status - 404</title>
+        <title> Não Encontrado - Projeto Orion</title>
       </Helmet>
       <MainContent>
         <Container maxWidth="md">
