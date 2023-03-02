@@ -13,6 +13,7 @@ function ApplicationRegistrarParticipacao() {
   const [isLoading, setIsLoading] = useState(false);
   const [evento, setEvento] = useState<Evento>();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getData() {
@@ -22,7 +23,9 @@ function ApplicationRegistrarParticipacao() {
           setIsLoading(false);
         });
       } catch (error) {
-        // navigate('/404');
+        if (error.response.status == 404) {
+          navigate('/404');
+        }
         console.log(error);
       }
     }
