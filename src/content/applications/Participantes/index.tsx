@@ -8,6 +8,7 @@ import SuspenseLoader from '../../../components/SuspenseLoader';
 import { useEffect, useState } from 'react';
 import { Participante } from '../../../models/participante';
 import { apiParticipantes } from '../../../core/services/api/axios';
+import AccessDenied from '../../../components/AccessDenied';
 
 function ApplicationsParticipantes() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,6 +21,9 @@ function ApplicationsParticipantes() {
           .then((result) => setParticipantes(result.data));
       } catch (error) {
         console.log(error);
+        if (error.response.status == 403) {
+          return <AccessDenied />;
+        }
       }
     }
     if (participantes.length === 0) {

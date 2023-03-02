@@ -9,6 +9,7 @@ import { TipoEvento } from '../../../models/tipo_evento';
 import { Evento } from '../../../models/evento';
 import { useEffect, useState } from 'react';
 import { apiEventos } from '../../../core/services/api/axios';
+import AccessDenied from '../../../components/AccessDenied';
 
 function ApplicationsEventos() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +23,9 @@ function ApplicationsEventos() {
           .then((result) => setEventos(result.data));
       } catch (error) {
         console.log(error);
+        if (error.response.status == 403) {
+          return <AccessDenied />;
+        }
       }
     }
 
@@ -36,6 +40,9 @@ function ApplicationsEventos() {
           .then((result) => setTiposEventos(result.data));
       } catch (error) {
         console.log(error);
+        if (error.response.status == 403) {
+          return <AccessDenied />;
+        }
       }
     }
 

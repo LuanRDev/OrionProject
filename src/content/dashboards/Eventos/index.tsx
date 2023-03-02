@@ -7,11 +7,11 @@ import Footer from '../../../components/Footer';
 import Eventos from './Eventos';
 import GraficosLista from './GraficosLista';
 import { apiEventos } from '../../../core/services/api/axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Evento } from '../../../models/evento';
 import { TipoEvento } from '../../../models/tipo_evento';
 import SuspenseLoader from '../../../components/SuspenseLoader';
-import { useKeycloak } from '@react-keycloak/web';
+import AccessDenied from '../../../components/AccessDenied';
 
 interface Tempo {
   ultimaSemana: number[];
@@ -19,16 +19,11 @@ interface Tempo {
   ultimoTrimestre: number[];
 }
 
-function DashboardCrypto() {
+function DashboardEventos() {
   const [eventos, setEventos] = useState<Evento[]>([]);
   const [dadosGrafico, setDadosGrafico] = useState<Tempo>();
   const [tiposEventos, setTiposEventos] = useState<TipoEvento[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const { keycloak } = useKeycloak();
-  const login = useCallback(() => {
-    keycloak?.login();
-  }, [keycloak]);
 
   useEffect(() => {
     async function getData() {
@@ -38,6 +33,9 @@ function DashboardCrypto() {
           .then((result) => setEventos(result.data));
       } catch (error) {
         console.log(error);
+        if (error.response.status == 403) {
+          return <AccessDenied />;
+        }
       }
       try {
         await apiEventos
@@ -45,6 +43,9 @@ function DashboardCrypto() {
           .then((result) => setTiposEventos(result.data));
       } catch (error) {
         console.log(error);
+        if (error.response.status == 403) {
+          return <AccessDenied />;
+        }
       }
       try {
         await apiEventos
@@ -52,6 +53,9 @@ function DashboardCrypto() {
           .then((result) => setDadosGrafico(result.data));
       } catch (error) {
         console.log(error);
+        if (error.response.status == 403) {
+          return <AccessDenied />;
+        }
       }
     }
     if (
@@ -62,14 +66,10 @@ function DashboardCrypto() {
       getData();
     }
     setIsLoading(false);
-    // if (!keycloak?.authenticated) {
-    //   keycloak?.login();
-    // }
   }, []);
   if (isLoading === true) {
     return <SuspenseLoader />;
   }
-  console.log(keycloak?.authenticated);
 
   return eventos.length !== 0 &&
     tiposEventos.length !== 0 &&
@@ -112,4 +112,4 @@ function DashboardCrypto() {
   );
 }
 
-export default DashboardCrypto;
+export default DashboardEventos;

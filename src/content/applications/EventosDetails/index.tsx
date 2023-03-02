@@ -10,6 +10,7 @@ import { Evento } from '../../../models/evento';
 import { useEffect, useState } from 'react';
 import { apiEventos } from '../../../core/services/api/axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import AccessDenied from '../../../components/AccessDenied';
 
 function EventosDetails() {
   const { id } = useParams();
@@ -37,6 +38,9 @@ function EventosDetails() {
       } catch (error) {
         // navigate('/404');
         console.log(error);
+        if (error.response.status == 403) {
+          return <AccessDenied />;
+        }
       }
     }
     getData();
