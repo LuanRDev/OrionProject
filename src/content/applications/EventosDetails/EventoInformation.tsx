@@ -26,8 +26,8 @@ const AvatarPrimary = styled(Avatar)(
   ({ theme }) => `
       background: ${theme.colors.primary.lighter};
       color: ${theme.colors.primary.main};
-      width: ${theme.spacing(8)};
-      height: ${theme.spacing(8)};
+      width: ${theme.spacing(6)};
+      height: ${theme.spacing(6)};
 `
 );
 
@@ -64,7 +64,7 @@ function EventoInformation({ Evento }: PropsEvento) {
           <EventIcon />
         </AvatarPrimary>
         <Box pl={2} flex={1}>
-          <Typography variant="h3">
+          <Typography variant="h4">
             {Evento.empresa} - {ReturnEventoTipo(Evento.tipoEvento)}
           </Typography>
           <Box pt={2} display="flex">
@@ -76,39 +76,39 @@ function EventoInformation({ Evento }: PropsEvento) {
               >
                 ID
               </Typography>
-              <Typography variant="h4"> {Evento.id}</Typography>
+              <Typography variant="h5"> {Evento.id}</Typography>
             </Box>
             <Box pr={4}>
               <Typography
                 gutterBottom
                 variant="caption"
                 sx={{
-                  fontSize: `${theme.typography.pxToRem(16)}`
+                  fontSize: `${theme.typography.pxToRem(14)}`
                 }}
               >
                 Carga Horária
               </Typography>
-              <Typography variant="h4">{Evento.cargaHoraria} horas</Typography>
+              <Typography variant="h5">{Evento.cargaHoraria} horas</Typography>
             </Box>
             <Box pr={4}>
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
+                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
               >
                 Instrutor
               </Typography>
-              <Typography variant="h4">{Evento.instrutor}</Typography>
+              <Typography variant="h5">{Evento.instrutor}</Typography>
             </Box>
             <Box pr={4}>
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
+                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
               >
                 Data do Evento
               </Typography>
-              <Typography variant="h4">
+              <Typography variant="h5">
                 {FormatDate(Evento.dataRealizado)}
               </Typography>
             </Box>
@@ -121,18 +121,18 @@ function EventoInformation({ Evento }: PropsEvento) {
           <GroupsIcon />
         </AvatarPrimary>
         <Box pl={2} flex={1}>
-          <Typography variant="h3">Participantes</Typography>
+          <Typography variant="h4">Participantes</Typography>
 
           <Box pt={2} display="flex">
             <Box pr={4}>
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
+                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
               >
                 Esperados
               </Typography>
-              <Typography variant="h4">
+              <Typography variant="h5">
                 {Evento.participantesEsperados}
               </Typography>
             </Box>
@@ -140,16 +140,16 @@ function EventoInformation({ Evento }: PropsEvento) {
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
+                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
               >
                 Confirmados
               </Typography>
-              <Typography variant="h4">
+              <Typography variant="h5">
                 {Evento.participacoesConfirmadas}
               </Typography>
             </Box>
           </Box>
-          <Grid item md={4} xs={4} sm={4}>
+          <Grid item md={4} xs={6} sm={8}>
             <Chart
               options={chartOptions}
               series={chartOptions.series}
@@ -164,17 +164,17 @@ function EventoInformation({ Evento }: PropsEvento) {
           <InsertDriveFileIcon />
         </AvatarPrimary>
         <Box pl={2} flex={1}>
-          <Typography variant="h3">Conteúdo do evento</Typography>
+          <Typography variant="h4">Conteúdo do evento</Typography>
           <Box pt={2} display="flex">
             <Box pr={4}>
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
+                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
               >
                 Arquivos
               </Typography>
-              <Typography variant="h4">
+              <Typography variant="h5">
                 {Evento.conteudoEventos?.map((arquivo) => (
                   <Typography mb={0.5} key={arquivo.name}>
                     <a href={arquivo.url}>{arquivo.name}</a>
@@ -186,11 +186,11 @@ function EventoInformation({ Evento }: PropsEvento) {
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
+                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
               >
                 Quantidade
               </Typography>
-              <Typography variant="h4">
+              <Typography variant="h5">
                 {Evento.conteudoEventos?.length}
               </Typography>
             </Box>

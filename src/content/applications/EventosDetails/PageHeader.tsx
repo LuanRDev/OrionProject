@@ -15,9 +15,13 @@ function PageHeader({ Evento, TiposEventos }: PropsEditarEvento) {
           Eventos
         </Typography>
       </Grid>
-      <Grid item>
-        <EditEventoForm Evento={Evento} TiposEventos={TiposEventos} />
-        <DeleteEventoForm id={Evento.id} />
+      <Grid display={'flex'} item>
+        <Grid item>
+          <EditEventoForm Evento={Evento} TiposEventos={TiposEventos} />
+        </Grid>
+        <Grid item marginLeft={1}>
+          <DeleteEventoForm id={Evento.id} />
+        </Grid>
       </Grid>
     </Grid>
   );
