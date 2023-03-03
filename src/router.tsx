@@ -6,8 +6,6 @@ import SidebarLayout from './layouts/SidebarLayout';
 import BaseLayout from './layouts/BaseLayout';
 
 import SuspenseLoader from './components/SuspenseLoader';
-import { ReactKeycloakProvider } from '@react-keycloak/web';
-import { initialConfig, keycloak } from './core/auth';
 
 const Loader = (Component: any) => (props: any) =>
   (
