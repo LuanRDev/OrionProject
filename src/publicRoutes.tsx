@@ -46,7 +46,6 @@ export function PublicRoutes() {
           <Route path="coming-soon" element={<StatusComingSoon />} />
           <Route path="register-success" element={<SuccessRegister />} />
         </Route>
-        <Route path="*" element={<Status404 />} />
         <Route
           path="eventos/:id/registrar-participacao"
           element={<RegistrarParticipacao />}
