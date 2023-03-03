@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-import { RouteObject } from 'react-router';
+import { Route, RouteObject, Routes } from 'react-router';
 
 import SidebarLayout from './layouts/SidebarLayout';
 import BaseLayout from './layouts/BaseLayout';
@@ -31,9 +31,6 @@ const EventosApplication = Loader(
 );
 const EventosDetails = Loader(
   lazy(() => import('./content/applications/EventosDetails'))
-);
-const RegistrarParticipacao = Loader(
-  lazy(() => import('./content/applications/RegistrarParticipacao'))
 );
 const UserProfile = Loader(
   lazy(() => import('./content/applications/Users/profile'))
@@ -66,187 +63,51 @@ const Forms = Loader(lazy(() => import('./content/pages/Components/Forms')));
 const Status404 = Loader(
   lazy(() => import('./content/pages/Status/Status404'))
 );
-const Status500 = Loader(
-  lazy(() => import('./content/pages/Status/Status500'))
-);
-const StatusComingSoon = Loader(
-  lazy(() => import('./content/pages/Status/ComingSoon'))
-);
-const StatusMaintenance = Loader(
-  lazy(() => import('./content/pages/Status/Maintenance'))
-);
-const SuccessRegister = Loader(
-  lazy(() => import('./content/pages/Status/SuccessRegister'))
-);
 
-const routes: RouteObject[] = [
-  {
-    element: (
-      <ReactKeycloakProvider
-        authClient={keycloak}
-        initOptions={initialConfig}
-        LoadingComponent={<SuspenseLoader />}
-      />
-    ),
-    children: [
-      {
-        element: <SidebarLayout />,
-        children: [
-          {
-            path: '/',
-            element: <Navigate to="/dashboards/eventos" replace />
-          },
-          {
-            path: 'eventos',
-            element: <Navigate to="/dashboards/eventos" replace />
-          },
-          {
-            path: '*',
-            element: <Status404 />
-          }
-        ]
-      },
-      {
-        path: 'dashboards',
-        element: <SidebarLayout />,
-        children: [
-          {
-            path: '',
-            element: <Navigate to="eventos" replace />
-          },
-          {
-            path: 'eventos',
-            element: <Evento />
-          }
-        ]
-      },
-      {
-        path: 'management',
-        element: <SidebarLayout />,
-        children: [
-          {
-            path: '',
-            element: <Navigate to="participantes" replace />
-          },
-          {
-            path: 'participantes',
-            element: <Participantes />
-          },
-          {
-            path: 'eventos',
-            element: <EventosApplication />
-          },
-          {
-            path: 'eventos/:id',
-            element: <EventosDetails />
-          },
-          {
-            path: 'profile',
-            children: [
-              {
-                path: '',
-                element: <Navigate to="details" replace />
-              },
-              {
-                path: 'details',
-                element: <UserProfile />
-              },
-              {
-                path: 'settings',
-                element: <UserSettings />
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    path: '/eventos',
-    element: <BaseLayout />,
-    children: [
-      {
-        path: ':id/registrar-participacao',
-        element: <RegistrarParticipacao />
-      }
-    ]
-  },
-  ,
-  {
-    path: 'status',
-    children: [
-      {
-        path: '',
-        element: <Navigate to="404" replace />
-      },
-      {
-        path: '404',
-        element: <Status404 />
-      },
-      {
-        path: '500',
-        element: <Status500 />
-      },
-      {
-        path: 'maintenance',
-        element: <StatusMaintenance />
-      },
-      {
-        path: 'coming-soon',
-        element: <StatusComingSoon />
-      },
-      {
-        path: 'register-success',
-        element: <SuccessRegister />
-      }
-    ]
-  },
-  {
-    path: '/components',
-    element: <BaseLayout />,
-    children: [
-      {
-        path: '',
-        element: <Navigate to="buttons" replace />
-      },
-      {
-        path: 'buttons',
-        element: <Buttons />
-      },
-      {
-        path: 'modals',
-        element: <Modals />
-      },
-      {
-        path: 'accordions',
-        element: <Accordions />
-      },
-      {
-        path: 'tabs',
-        element: <Tabs />
-      },
-      {
-        path: 'badges',
-        element: <Badges />
-      },
-      {
-        path: 'tooltips',
-        element: <Tooltips />
-      },
-      {
-        path: 'avatars',
-        element: <Avatars />
-      },
-      {
-        path: 'cards',
-        element: <Cards />
-      },
-      {
-        path: 'forms',
-        element: <Forms />
-      }
-    ]
-  }
-];
-
-export default routes;
+export function Router() {
+  return (
+    <Routes>
+      <Route path="" element={<BaseLayout />}>
+        <Route
+          path="/"
+          element={<Navigate to="/dashboards/eventos" replace />}
+        />
+        <Route
+          path="eventos"
+          element={<Navigate to="/dashboards/eventos" replace />}
+        />
+        <Route path="*" element={<Status404 />} />
+        <Route path="dashboards" element={<SidebarLayout />}>
+          <Route path="" element={<Navigate to="eventos" replace />} />
+          <Route path="eventos" element={<Evento />} />
+        </Route>
+        <Route path="management" element={<SidebarLayout />}>
+          <Route
+            path="/management"
+            element={<Navigate to="participantes" replace />}
+          />
+          <Route path="participantes" element={<Participantes />} />
+          <Route path="eventos" element={<EventosApplication />} />
+          <Route path="eventos/:id" element={<EventosDetails />} />
+          <Route path="profile">
+            <Route
+              path="management/profile"
+              element={<Navigate to="details" replace />}
+            />
+            <Route path="details" element={<UserProfile />} />
+            <Route path="settings" element={<UserSettings />} />
+          </Route>
+        </Route>
+        <Route path="components" element={<SidebarLayout />}>
+          <Route
+            path="/components"
+            element={<Navigate to="buttons" replace />}
+          />
+          <Route path="buttons" element={<Buttons />} />
+          <Route path="modals" element={<Modals />} />
+          <Route path="accordions" element={<Accordions />} />
+        </Route>
+      </Route>
+    </Routes>
+  );
+}
