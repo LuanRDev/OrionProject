@@ -82,8 +82,8 @@ function RegistrarParticipacao({ Evento }: PropsEvento) {
                         Links para acessar diretamente o conteúdo:{' '}
                       </Typography>
                       <List>
-                        {Evento.conteudoEventos.map((arquivo) => (
-                          <ListItem>
+                        {Evento.conteudoEventos.map((arquivo, index) => (
+                          <ListItem key={index}>
                             <ListItemText
                               primary={arquivo.name}
                               secondary={arquivo.url}
