@@ -71,9 +71,9 @@ export function Router() {
   return (
     <Routes>
       <Route element={<AuthProvider />}>
-        <Route path={'/admin'} element={<BaseLayout />}>
+        <Route element={<BaseLayout />}>
           <Route
-            path="/admin"
+            path="/"
             element={<Navigate to="/dashboards/eventos" replace />}
           />
           <Route
@@ -86,7 +86,7 @@ export function Router() {
           </Route>
           <Route path="management" element={<SidebarLayout />}>
             <Route
-              path="admin/management"
+              path="/management"
               element={<Navigate to="participantes" replace />}
             />
             <Route path="participantes" element={<Participantes />} />
@@ -94,7 +94,7 @@ export function Router() {
             <Route path="eventos/:id" element={<EventosDetails />} />
             <Route path="profile">
               <Route
-                path="admin/management/profile"
+                path="/management/profile"
                 element={<Navigate to="details" replace />}
               />
               <Route path="details" element={<UserProfile />} />
@@ -103,7 +103,7 @@ export function Router() {
           </Route>
           <Route path="components" element={<SidebarLayout />}>
             <Route
-              path="admin/components"
+              path="/components"
               element={<Navigate to="buttons" replace />}
             />
             <Route path="buttons" element={<Buttons />} />
