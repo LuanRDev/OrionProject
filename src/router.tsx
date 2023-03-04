@@ -7,6 +7,11 @@ import BaseLayout from './layouts/BaseLayout';
 
 import SuspenseLoader from './components/SuspenseLoader';
 import AuthProvider from './authProvider';
+import Status500 from './content/pages/Status/Status500';
+import RegistrarParticipacao from './content/applications/RegistrarParticipacao';
+import StatusComingSoon from './content/pages/Status/ComingSoon';
+import StatusMaintenance from './content/pages/Status/Maintenance';
+import SuccessRegister from './content/pages/Status/SuccessRegister';
 
 const Loader = (Component: any) => (props: any) =>
   (
@@ -66,9 +71,9 @@ export function Router() {
   return (
     <Routes>
       <Route element={<AuthProvider />}>
-        <Route element={<BaseLayout />}>
+        <Route path={'/admin'} element={<BaseLayout />}>
           <Route
-            path="/"
+            path="/admin"
             element={<Navigate to="/dashboards/eventos" replace />}
           />
           <Route
@@ -81,7 +86,7 @@ export function Router() {
           </Route>
           <Route path="management" element={<SidebarLayout />}>
             <Route
-              path="/management"
+              path="admin/management"
               element={<Navigate to="participantes" replace />}
             />
             <Route path="participantes" element={<Participantes />} />
@@ -89,7 +94,7 @@ export function Router() {
             <Route path="eventos/:id" element={<EventosDetails />} />
             <Route path="profile">
               <Route
-                path="management/profile"
+                path="admin/management/profile"
                 element={<Navigate to="details" replace />}
               />
               <Route path="details" element={<UserProfile />} />
@@ -98,7 +103,7 @@ export function Router() {
           </Route>
           <Route path="components" element={<SidebarLayout />}>
             <Route
-              path="/components"
+              path="admin/components"
               element={<Navigate to="buttons" replace />}
             />
             <Route path="buttons" element={<Buttons />} />
@@ -106,8 +111,21 @@ export function Router() {
             <Route path="accordions" element={<Accordions />} />
           </Route>
         </Route>
-        <Route path="*" element={<Status404 />} />
       </Route>
+      <Route element={<BaseLayout />}>
+        <Route path="status" element={<Navigate to="404" replace />}>
+          <Route path="404" element={<Status404 />} />
+          <Route path="500" element={<Status500 />} />
+          <Route path="maintenance" element={<StatusMaintenance />} />
+          <Route path="coming-soon" element={<StatusComingSoon />} />
+          <Route path="register-success" element={<SuccessRegister />} />
+        </Route>
+        <Route
+          path="eventos/:id/registrar-participacao"
+          element={<RegistrarParticipacao />}
+        />
+      </Route>
+      <Route path="*" element={<Status404 />} />
     </Routes>
   );
 }

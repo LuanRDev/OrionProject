@@ -8,7 +8,6 @@ function Routes() {
   return (
     <>
       <Router />
-      <PublicRoutes />
     </>
   );
 }
