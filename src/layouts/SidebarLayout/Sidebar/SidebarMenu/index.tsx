@@ -239,11 +239,11 @@ function SidebarMenu() {
             </List>
           </SubMenuWrapper>
         </List>
-        {/* <List
+        <List
           component="div"
           subheader={
             <ListSubheader component="div" disableSticky>
-              Accounts
+              Contas
             </ListSubheader>
           }
         >
@@ -257,7 +257,7 @@ function SidebarMenu() {
                   to="/management/profile/details"
                   startIcon={<AccountCircleTwoToneIcon />}
                 >
-                  User Profile
+                  Perfil do Usuário
                 </Button>
               </ListItem>
               <ListItem component="div">
@@ -268,12 +268,12 @@ function SidebarMenu() {
                   to="/management/profile/settings"
                   startIcon={<DisplaySettingsTwoToneIcon />}
                 >
-                  Account Settings
+                  Configurações de Conta
                 </Button>
               </ListItem>
             </List>
           </SubMenuWrapper>
-        </List> */}
+        </List>
       </MenuWrapper>
     </>
   );
