@@ -8,6 +8,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Evento } from '../../../models/evento';
 import { apiEventos } from '../../../core/services/api/axios';
 import SuspenseLoader from '../../../components/SuspenseLoader';
+import request from 'axios';
 
 function ApplicationRegistrarParticipacao() {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,8 +25,11 @@ function ApplicationRegistrarParticipacao() {
         });
       } catch (error) {
         console.log(error);
-        if (error.response.status == 404) {
-          navigate('/status/404');
+        setIsLoading(false);
+        if (request.isAxiosError(error) && error.response) {
+          if (error.response.status == 404) {
+            navigate('/status/404');
+          }
         }
       }
     }
