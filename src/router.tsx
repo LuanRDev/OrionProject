@@ -6,6 +6,7 @@ import SidebarLayout from './layouts/SidebarLayout';
 import BaseLayout from './layouts/BaseLayout';
 
 import SuspenseLoader from './components/SuspenseLoader';
+import AuthProvider from './authProvider';
 
 const Loader = (Component: any) => (props: any) =>
   (
@@ -65,45 +66,46 @@ const Status404 = Loader(
 export function Router() {
   return (
     <Routes>
-      <Route path="" element={<BaseLayout />}>
-        <Route
-          path="/"
-          element={<Navigate to="/dashboards/eventos" replace />}
-        />
-        <Route
-          path="eventos"
-          element={<Navigate to="/dashboards/eventos" replace />}
-        />
-        <Route path="*" element={<Status404 />} />
-        <Route path="dashboards" element={<SidebarLayout />}>
-          <Route path="" element={<Navigate to="eventos" replace />} />
-          <Route path="eventos" element={<Evento />} />
-        </Route>
-        <Route path="management" element={<SidebarLayout />}>
+      <Route element={<AuthProvider />}>
+        <Route path="" element={<BaseLayout />}>
           <Route
-            path="/management"
-            element={<Navigate to="participantes" replace />}
+            path="/"
+            element={<Navigate to="/dashboards/eventos" replace />}
           />
-          <Route path="participantes" element={<Participantes />} />
-          <Route path="eventos" element={<EventosApplication />} />
-          <Route path="eventos/:id" element={<EventosDetails />} />
-          <Route path="profile">
-            <Route
-              path="management/profile"
-              element={<Navigate to="details" replace />}
-            />
-            <Route path="details" element={<UserProfile />} />
-            <Route path="settings" element={<UserSettings />} />
+          <Route
+            path="eventos"
+            element={<Navigate to="/dashboards/eventos" replace />}
+          />
+          <Route path="dashboards" element={<SidebarLayout />}>
+            <Route path="" element={<Navigate to="eventos" replace />} />
+            <Route path="eventos" element={<Evento />} />
           </Route>
-        </Route>
-        <Route path="components" element={<SidebarLayout />}>
-          <Route
-            path="/components"
-            element={<Navigate to="buttons" replace />}
-          />
-          <Route path="buttons" element={<Buttons />} />
-          <Route path="modals" element={<Modals />} />
-          <Route path="accordions" element={<Accordions />} />
+          <Route path="management" element={<SidebarLayout />}>
+            <Route
+              path="/management"
+              element={<Navigate to="participantes" replace />}
+            />
+            <Route path="participantes" element={<Participantes />} />
+            <Route path="eventos" element={<EventosApplication />} />
+            <Route path="eventos/:id" element={<EventosDetails />} />
+            <Route path="profile">
+              <Route
+                path="management/profile"
+                element={<Navigate to="details" replace />}
+              />
+              <Route path="details" element={<UserProfile />} />
+              <Route path="settings" element={<UserSettings />} />
+            </Route>
+          </Route>
+          <Route path="components" element={<SidebarLayout />}>
+            <Route
+              path="/components"
+              element={<Navigate to="buttons" replace />}
+            />
+            <Route path="buttons" element={<Buttons />} />
+            <Route path="modals" element={<Modals />} />
+            <Route path="accordions" element={<Accordions />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

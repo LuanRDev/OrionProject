@@ -7,13 +7,7 @@ import { Router } from './router';
 function Routes() {
   return (
     <>
-      <ReactKeycloakProvider
-        authClient={keycloak}
-        initOptions={initialConfig}
-        LoadingComponent={<SuspenseLoader />}
-      >
-        <Router />
-      </ReactKeycloakProvider>
+      <Router />
       <PublicRoutes />
     </>
   );

@@ -39,6 +39,7 @@ export function PublicRoutes() {
   return (
     <Routes>
       <Route path="" element={<BaseLayout />}>
+        <Route path="*" element={<Status404 />} />
         <Route path="status" element={<Navigate to="404" replace />}>
           <Route path="404" element={<Status404 />} />
           <Route path="500" element={<Status500 />} />
