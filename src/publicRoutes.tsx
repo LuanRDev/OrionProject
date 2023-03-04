@@ -38,14 +38,14 @@ const SuccessRegister = Loader(
 export function PublicRoutes() {
   return (
     <Routes>
-      <Route path="*" element={<Status404 />} />
-      <Route path="" element={<BaseLayout />}>
+      <Route element={<BaseLayout />}>
         <Route path="status" element={<Navigate to="404" replace />}>
           <Route path="404" element={<Status404 />} />
           <Route path="500" element={<Status500 />} />
           <Route path="maintenance" element={<StatusMaintenance />} />
           <Route path="coming-soon" element={<StatusComingSoon />} />
           <Route path="register-success" element={<SuccessRegister />} />
+          <Route path="*" element={<Status404 />} />
         </Route>
         <Route
           path="eventos/:id/registrar-participacao"

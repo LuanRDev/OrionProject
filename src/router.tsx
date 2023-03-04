@@ -58,7 +58,6 @@ const Avatars = Loader(
 const Cards = Loader(lazy(() => import('./content/pages/Components/Cards')));
 const Forms = Loader(lazy(() => import('./content/pages/Components/Forms')));
 
-// Status
 const Status404 = Loader(
   lazy(() => import('./content/pages/Status/Status404'))
 );
@@ -67,7 +66,7 @@ export function Router() {
   return (
     <Routes>
       <Route element={<AuthProvider />}>
-        <Route path="" element={<BaseLayout />}>
+        <Route element={<BaseLayout />}>
           <Route
             path="/"
             element={<Navigate to="/dashboards/eventos" replace />}
@@ -107,6 +106,7 @@ export function Router() {
             <Route path="accordions" element={<Accordions />} />
           </Route>
         </Route>
+        <Route path="*" element={<Status404 />} />
       </Route>
     </Routes>
   );
