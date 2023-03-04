@@ -13,7 +13,6 @@ import {
   ListItem,
   ListItemText,
   Stack,
-  TextField,
   Typography
 } from '@mui/material';
 import { useState } from 'react';
@@ -84,10 +83,12 @@ function RegistrarParticipacao({ Evento }: PropsEvento) {
                       <List>
                         {Evento.conteudoEventos.map((arquivo, index) => (
                           <ListItem key={index}>
-                            <ListItemText
-                              primary={arquivo.name}
-                              secondary={arquivo.url}
-                            />
+                            <a href={arquivo.url}>
+                              <ListItemText
+                                primary={arquivo.name}
+                                secondary={arquivo.url}
+                              />
+                            </a>
                           </ListItem>
                         ))}
                       </List>
