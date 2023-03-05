@@ -15,7 +15,7 @@ function EventosApplication({ Eventos }: EventosApplicationProps) {
   return (
     <Grid container spacing={3} gap={2}>
       {Eventos.map((evento) => (
-        <Grid xs={12} sm={6} md={3} item>
+        <Grid xs={12} sm={6} md={3} item key={evento.id}>
           <Card key={evento.id} sx={{ px: 1 }}>
             <CardContent>
               <Typography variant="h3" marginBottom={0.5} textAlign="center">
