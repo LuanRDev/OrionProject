@@ -17,6 +17,7 @@ import { apiEventos } from '../../core/services/api/axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
+import { useKeycloak } from '@react-keycloak/web';
 
 export interface DialogTitleProps {
   id: string;
@@ -38,7 +39,10 @@ const DeleteEventoForm = ({ id }: DeleteEventoProps) => {
   const [snackMessage, setSnackMessage] = useState<string>('');
   const [openSnack, setOpenSnack] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-
+  const { keycloak } = useKeycloak();
+  const config = {
+    headers: { Authorization: `Bearer ${keycloak?.token!}` }
+  };
   const navigate = useNavigate();
   const location = useLocation();
   const handleClose = () => {
@@ -77,7 +81,7 @@ const DeleteEventoForm = ({ id }: DeleteEventoProps) => {
 
   async function excluirEvento() {
     try {
-      await apiEventos.delete(`/api/eventos/${id}`);
+      await apiEventos.delete(`/api/eventos/${id}`, config);
       handleClose();
       if (location.pathname == `/management/eventos/${id}`) {
         navigate('/management/eventos');

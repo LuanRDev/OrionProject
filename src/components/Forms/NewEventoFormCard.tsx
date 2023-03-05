@@ -25,6 +25,7 @@ import { useForm } from 'react-hook-form';
 import { apiEventos } from '../../core/services/api/axios';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import { TipoEvento } from '../../models/tipo_evento';
+import { useKeycloak } from '@react-keycloak/web';
 
 export interface DialogTitleProps {
   id: string;
@@ -62,6 +63,10 @@ const NewEventoFormCard = ({ TiposEventos }: PropsNovoEvento) => {
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState<string>('');
   const [selectTipoEvento, setSelectTipoEvento] = useState<number | string>(1);
+  const { keycloak } = useKeycloak();
+  const config = {
+    headers: { Authorization: `Bearer ${keycloak?.token!}` }
+  };
 
   const handleCloseModal = () => setOpenModal(false);
 
@@ -136,16 +141,20 @@ const NewEventoFormCard = ({ TiposEventos }: PropsNovoEvento) => {
       participantesEsperados
     } = data;
     try {
-      await apiEventos.post(`/api/eventos`, {
-        descricao,
-        empresa,
-        tipoEvento: selectTipoEvento,
-        instrutor,
-        dataRealizado,
-        cargaHoraria,
-        participantesEsperados,
-        arquivosBase64: filesBase64
-      });
+      await apiEventos.post(
+        `/api/eventos`,
+        {
+          descricao,
+          empresa,
+          tipoEvento: selectTipoEvento,
+          instrutor,
+          dataRealizado,
+          cargaHoraria,
+          participantesEsperados,
+          arquivosBase64: filesBase64
+        },
+        config
+      );
       setFilesBase64([]);
       setFilesNames([]);
       handleCloseModal();
