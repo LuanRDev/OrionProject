@@ -73,7 +73,7 @@ function Status404() {
                 />
               </FormControl>
               <Divider sx={{ my: 4 }}>OU</Divider>
-              <Button href="/overview" variant="outlined">
+              <Button href="/dashboards" variant="outlined">
                 Ir para a página principal
               </Button>
             </Card>
