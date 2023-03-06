@@ -12,6 +12,7 @@ import { Evento } from '../../../models/evento';
 import { TipoEvento } from '../../../models/tipo_evento';
 import SuspenseLoader from '../../../components/SuspenseLoader';
 import AccessDenied from '../../../components/AccessDenied';
+import { useKeycloak } from '@react-keycloak/web';
 
 interface Tempo {
   ultimaSemana: number[];
@@ -24,12 +25,15 @@ function DashboardEventos() {
   const [dadosGrafico, setDadosGrafico] = useState<Tempo>();
   const [tiposEventos, setTiposEventos] = useState<TipoEvento[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const { keycloak } = useKeycloak();
+  const config = {
+    headers: { Authorization: `Bearer ${keycloak?.token!}` }
+  };
   useEffect(() => {
     async function getData() {
       try {
         await apiEventos
-          .get('/api/eventos?limit=3')
+          .get('/api/eventos?limit=3', config)
           .then((result) => setEventos(result.data));
       } catch (error) {
         console.log(error);
@@ -39,7 +43,7 @@ function DashboardEventos() {
       }
       try {
         await apiEventos
-          .get('/api/eventos/tipos')
+          .get('/api/eventos/tipos', config)
           .then((result) => setTiposEventos(result.data));
       } catch (error) {
         console.log(error);
@@ -49,7 +53,7 @@ function DashboardEventos() {
       }
       try {
         await apiEventos
-          .get('/api/eventos/reports')
+          .get('/api/eventos/reports', config)
           .then((result) => setDadosGrafico(result.data));
       } catch (error) {
         console.log(error);

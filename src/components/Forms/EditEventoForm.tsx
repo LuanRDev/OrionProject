@@ -27,6 +27,7 @@ import Dialog from '@mui/material/Dialog';
 import { Evento } from '../../models/evento';
 import { TipoEvento } from '../../models/tipo_evento';
 import { useNavigate } from 'react-router-dom';
+import { useKeycloak } from '@react-keycloak/web';
 
 export interface DialogTitleProps {
   id: string;
@@ -66,6 +67,10 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
     Evento?.tipoEvento || 1
   );
   const navigate = useNavigate();
+  const { keycloak } = useKeycloak();
+  const config = {
+    headers: { Authorization: `Bearer ${keycloak?.token!}` }
+  };
 
   function CustomDialogTitle(props: DialogTitleProps) {
     const { children, onClose, ...other } = props;
@@ -139,16 +144,20 @@ const EditEventoForm = ({ Evento, TiposEventos }: PropsEditarEvento) => {
       participantesEsperados
     } = data;
     try {
-      await apiEventos.put(`/api/eventos/${Evento?.id}`, {
-        descricao,
-        empresa,
-        tipoEvento: selectTipoEvento,
-        instrutor,
-        dataRealizado,
-        cargaHoraria,
-        participantesEsperados,
-        arquivosBase64: filesBase64
-      });
+      await apiEventos.put(
+        `/api/eventos/${Evento?.id}`,
+        {
+          descricao,
+          empresa,
+          tipoEvento: selectTipoEvento,
+          instrutor,
+          dataRealizado,
+          cargaHoraria,
+          participantesEsperados,
+          arquivosBase64: filesBase64
+        },
+        config
+      );
       navigate(0);
     } catch (error) {
       setSnackMessage('Ops! Ocorreu um erro ao editar os dados do evento.');

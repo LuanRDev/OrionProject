@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { apiEventos } from '../../../core/services/api/axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import AccessDenied from '../../../components/AccessDenied';
+import { useKeycloak } from '@react-keycloak/web';
 
 function EventosDetails() {
   const { id } = useParams();
@@ -18,10 +19,14 @@ function EventosDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [evento, setEvento] = useState<Evento>();
   const [tiposEventos, setTiposEventos] = useState<TipoEvento[]>([]);
+  const { keycloak } = useKeycloak();
+  const config = {
+    headers: { Authorization: `Bearer ${keycloak?.token!}` }
+  };
   useEffect(() => {
     async function getData() {
       try {
-        await apiEventos.get(`/api/eventos/${id}`).then((result) => {
+        await apiEventos.get(`/api/eventos/${id}`, config).then((result) => {
           setEvento(result.data);
           setIsLoading(false);
         });
@@ -31,7 +36,7 @@ function EventosDetails() {
       }
 
       try {
-        await apiEventos.get('/api/eventos/tipos').then((result) => {
+        await apiEventos.get('/api/eventos/tipos', config).then((result) => {
           setTiposEventos(result.data);
           setIsLoading(false);
         });

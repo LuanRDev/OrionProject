@@ -10,11 +10,9 @@ import { keycloak } from '../../auth';
 // });
 
 export const apiEventos = axios.create({
-  baseURL: 'https://omega.messier-g.com.br',
-  headers: { Authorization: 'Bearer ' + keycloak?.token! }
+  baseURL: 'https://omega.messier-g.com.br'
 });
 
 export const apiParticipantes = axios.create({
-  baseURL: 'https://lagoon.messier-g.com.br',
-  headers: { Authorization: 'Bearer ' + keycloak?.token! }
+  baseURL: 'https://lagoon.messier-g.com.br'
 });

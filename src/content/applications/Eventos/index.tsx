@@ -10,16 +10,21 @@ import { Evento } from '../../../models/evento';
 import { useEffect, useState } from 'react';
 import { apiEventos } from '../../../core/services/api/axios';
 import AccessDenied from '../../../components/AccessDenied';
+import { useKeycloak } from '@react-keycloak/web';
 
 function ApplicationsEventos() {
   const [isLoading, setIsLoading] = useState(true);
   const [eventos, setEventos] = useState<Evento[]>([]);
   const [tiposEventos, setTiposEventos] = useState<TipoEvento[]>([]);
+  const { keycloak } = useKeycloak();
+  const config = {
+    headers: { Authorization: `Bearer ${keycloak?.token!}` }
+  };
   useEffect(() => {
     async function getEventos() {
       try {
         await apiEventos
-          .get('/api/eventos')
+          .get('/api/eventos', config)
           .then((result) => setEventos(result.data));
       } catch (error) {
         console.log(error);
@@ -36,7 +41,7 @@ function ApplicationsEventos() {
     async function getTiposEventos() {
       try {
         await apiEventos
-          .get('/api/eventos/tipos')
+          .get('/api/eventos/tipos', config)
           .then((result) => setTiposEventos(result.data));
       } catch (error) {
         console.log(error);
