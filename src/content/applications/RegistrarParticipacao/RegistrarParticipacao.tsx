@@ -13,7 +13,8 @@ import {
   ListItem,
   ListItemText,
   Stack,
-  Typography
+  Typography,
+  useTheme
 } from '@mui/material';
 import { useState } from 'react';
 import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer';
@@ -30,6 +31,7 @@ interface PropsEvento {
 function RegistrarParticipacao({ Evento }: PropsEvento) {
   const [expanded, setExpanded] = useState<string | false>(false);
   const [checked, setChecked] = useState(false);
+  const theme = useTheme();
 
   const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
@@ -58,19 +60,41 @@ function RegistrarParticipacao({ Evento }: PropsEvento) {
               </AccordionSummary>
               <AccordionDetails>
                 <Stack margin={2}>
-                  <Typography variant="h6">
-                    Código do evento: {Evento?.id}
-                  </Typography>
-                  <Typography variant="h6">
+                  <Typography variant="h4">
                     Registre sua participação para o{' '}
-                    {ReturnEventoTipo(Evento.tipoEvento)}, pela empresa
+                    {ReturnEventoTipo(Evento.tipoEvento)}, pela empresa{' '}
                     {Evento.empresa}.
                   </Typography>
-                  <Typography variant="h6">
-                    Descrição do evento: {Evento.descricao}
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      fontSize: `${theme.typography.pxToRem(12)}`
+                    }}
+                  >
+                    Código do evento:
                   </Typography>
-                  <Typography variant="h6">
-                    Data da realização: {FormatDate(Evento.dataRealizado)}
+                  <Typography variant="h5">{Evento?.id}</Typography>
+
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      fontSize: `${theme.typography.pxToRem(12)}`
+                    }}
+                  >
+                    Descrição do evento:
+                  </Typography>
+                  <Typography variant="h5">{Evento.descricao}</Typography>
+
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      fontSize: `${theme.typography.pxToRem(12)}`
+                    }}
+                  >
+                    Data da realização:
+                  </Typography>
+                  <Typography variant="h5">
+                    {FormatDate(Evento.dataRealizado)}
                   </Typography>
                 </Stack>
                 <Divider />
@@ -95,7 +119,7 @@ function RegistrarParticipacao({ Evento }: PropsEvento) {
                     </Stack>
                     <Divider />
                     <Stack margin={2}>
-                      <Typography variant={'body1'}>
+                      <Typography variant={'body1'} pb={2}>
                         Abaixo encontre uma visualização do arquivo embutida à
                         nossa plataforma. Nem todos os arquivos são compatíveis
                         com a pré-visualização, nesses casos é recomendado abrir
