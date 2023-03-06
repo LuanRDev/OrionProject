@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import { Grid, Typography, Button, Hidden } from '@mui/material';
+import { Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { Box, Container } from '@mui/system';
 import { Helmet } from 'react-helmet-async';
 const MainContent = styled(Box)(
