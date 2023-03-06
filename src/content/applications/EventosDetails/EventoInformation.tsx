@@ -61,6 +61,16 @@ function EventoInformation({ Evento }: PropsEvento) {
   return (
     <Card>
       <CardHeader title="Informações Gerais" />
+      <Button
+        size="small"
+        variant="contained"
+        onClick={() => {
+          navigator.clipboard.writeText(eventoLink);
+        }}
+        startIcon={<ContentPasteIcon fontSize="small" />}
+      >
+        Copiar link de compartilhamento
+      </Button>
       <Divider />
       <Box px={1} py={2} display="flex" alignItems="flex-start">
         <AvatarPrimary>
@@ -71,16 +81,6 @@ function EventoInformation({ Evento }: PropsEvento) {
             <Typography variant="h4">
               {Evento.empresa} - {ReturnEventoTipo(Evento.tipoEvento)}
             </Typography>
-            <Button
-              size="small"
-              variant="contained"
-              onClick={() => {
-                navigator.clipboard.writeText(eventoLink);
-              }}
-              startIcon={<ContentPasteIcon fontSize="small" />}
-            >
-              Copiar link de compartilhamento
-            </Button>
           </Box>
           <Box pt={2} display="flex">
             <Box pr={4}>
@@ -103,42 +103,44 @@ function EventoInformation({ Evento }: PropsEvento) {
               </Typography>
               <Typography variant="h5">{Evento.eventoHash}</Typography>
             </Box>
-            <br />
-            <Box pr={4}>
-              <Typography
-                gutterBottom
-                variant="caption"
-                sx={{
-                  fontSize: `${theme.typography.pxToRem(12)}`
-                }}
-              >
-                Carga Horária
-              </Typography>
-              <Typography variant="h5">{Evento.cargaHoraria} horas</Typography>
-            </Box>
-            <Box pr={4}>
-              <Typography
-                gutterBottom
-                variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
-              >
-                Instrutor
-              </Typography>
-              <Typography variant="h5">{Evento.instrutor}</Typography>
-            </Box>
-            <br />
-            <Box pr={4}>
-              <Typography
-                gutterBottom
-                variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
-              >
-                Data do Evento
-              </Typography>
-              <Typography variant="h5">
-                {FormatDate(Evento.dataRealizado)}
-              </Typography>
-            </Box>
+          </Box>
+        </Box>
+        <Box pl={2} flex={1}>
+          <Box pr={4}>
+            <Typography
+              gutterBottom
+              variant="caption"
+              sx={{
+                fontSize: `${theme.typography.pxToRem(12)}`
+              }}
+            >
+              Carga Horária
+            </Typography>
+            <Typography variant="h5">{Evento.cargaHoraria} horas</Typography>
+          </Box>
+          <Box pr={4}>
+            <Typography
+              gutterBottom
+              variant="caption"
+              sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
+            >
+              Instrutor
+            </Typography>
+            <Typography variant="h5">{Evento.instrutor}</Typography>
+          </Box>
+        </Box>
+        <Box pl={2} flex={1}>
+          <Box pr={4}>
+            <Typography
+              gutterBottom
+              variant="caption"
+              sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
+            >
+              Data do Evento
+            </Typography>
+            <Typography variant="h5">
+              {FormatDate(Evento.dataRealizado)}
+            </Typography>
           </Box>
         </Box>
       </Box>
@@ -197,11 +199,11 @@ function EventoInformation({ Evento }: PropsEvento) {
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
+                sx={{ fontSize: `${theme.typography.pxToRem(10)}` }}
               >
                 Arquivos
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="h6">
                 {Evento.conteudoEventos?.map((arquivo) => (
                   <Typography mb={0.5} key={arquivo.name}>
                     <a href={arquivo.url}>{arquivo.name}</a>
@@ -213,11 +215,11 @@ function EventoInformation({ Evento }: PropsEvento) {
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
+                sx={{ fontSize: `${theme.typography.pxToRem(10)}` }}
               >
                 Quantidade
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="h6">
                 {Evento.conteudoEventos?.length}
               </Typography>
             </Box>

@@ -101,13 +101,11 @@ function RegistrarParticipacao({ Evento }: PropsEvento) {
                         com a pré-visualização, nesses casos é recomendado abrir
                         diretamente o link dos arquivos.
                       </Typography>
-                      <Box height={'15vh'}>
-                        <DocViewer
-                          documents={docs}
-                          pluginRenderers={DocViewerRenderers}
-                          language={'pt'}
-                        />
-                      </Box>
+                      <DocViewer
+                        documents={docs}
+                        pluginRenderers={DocViewerRenderers}
+                        language={'pt'}
+                      />
                     </Stack>
                   </>
                 ) : (
