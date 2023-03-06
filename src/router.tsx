@@ -113,7 +113,7 @@ export function Router() {
         </Route>
       </Route>
       <Route element={<BaseLayout />}>
-        <Route path="status" element={<Navigate to="404" replace />}>
+        <Route path="status">
           <Route path="404" element={<Status404 />} />
           <Route path="500" element={<Status500 />} />
           <Route path="maintenance" element={<StatusMaintenance />} />
