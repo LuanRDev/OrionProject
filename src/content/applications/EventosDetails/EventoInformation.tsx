@@ -77,6 +77,8 @@ function EventoInformation({ Evento }: PropsEvento) {
                 ID
               </Typography>
               <Typography variant="h5"> {Evento.id}</Typography>
+            </Box>
+            <Box pr={4}>
               <Typography
                 gutterBottom
                 variant="caption"
@@ -86,12 +88,13 @@ function EventoInformation({ Evento }: PropsEvento) {
               </Typography>
               <Typography variant="h5">{Evento.eventoHash}</Typography>
             </Box>
+            <br />
             <Box pr={4}>
               <Typography
                 gutterBottom
                 variant="caption"
                 sx={{
-                  fontSize: `${theme.typography.pxToRem(14)}`
+                  fontSize: `${theme.typography.pxToRem(12)}`
                 }}
               >
                 Carga Horária
@@ -108,6 +111,7 @@ function EventoInformation({ Evento }: PropsEvento) {
               </Typography>
               <Typography variant="h5">{Evento.instrutor}</Typography>
             </Box>
+            <br />
             <Box pr={4}>
               <Typography
                 gutterBottom
