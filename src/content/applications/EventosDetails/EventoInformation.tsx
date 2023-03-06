@@ -8,7 +8,9 @@ import {
   useTheme,
   styled,
   Grid,
-  Button
+  Button,
+  CardActions,
+  IconButton
 } from '@mui/material';
 import Chart from 'react-apexcharts';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
@@ -35,7 +37,6 @@ const AvatarPrimary = styled(Avatar)(
 
 function EventoInformation({ Evento }: PropsEvento) {
   const theme = useTheme();
-
   var eventoLink = `${window.location.origin}/eventos/${Evento.id}/registrar-participacao?hashEvento=${Evento.eventoHash}`;
   const chartOptions: ApexOptions = {
     series: [Evento.participantesEsperados, Evento.participacoesConfirmadas],
@@ -61,16 +62,6 @@ function EventoInformation({ Evento }: PropsEvento) {
   return (
     <Card>
       <CardHeader title="Informações Gerais" />
-      <Button
-        size="small"
-        variant="contained"
-        onClick={() => {
-          navigator.clipboard.writeText(eventoLink);
-        }}
-        startIcon={<ContentPasteIcon fontSize="small" />}
-      >
-        Copiar link de compartilhamento
-      </Button>
       <Divider />
       <Box px={1} py={2} display="flex" alignItems="flex-start">
         <AvatarPrimary>
@@ -82,59 +73,57 @@ function EventoInformation({ Evento }: PropsEvento) {
               {Evento.empresa} - {ReturnEventoTipo(Evento.tipoEvento)}
             </Typography>
           </Box>
-          <Box pt={2} display="flex">
-            <Box pr={4}>
+          <Box pb={0.5} pt={1} display="flex">
+            <Box pr={2}>
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
+                sx={{ fontSize: `${theme.typography.pxToRem(12)}` }}
               >
                 ID
               </Typography>
               <Typography variant="h5"> {Evento.id}</Typography>
             </Box>
-            <Box pr={4}>
+            <Box pr={1}>
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
+                sx={{ fontSize: `${theme.typography.pxToRem(12)}` }}
               >
                 Hash/Senha
               </Typography>
               <Typography variant="h5">{Evento.eventoHash}</Typography>
             </Box>
           </Box>
-        </Box>
-        <Box pl={2} flex={1}>
-          <Box pr={4}>
-            <Typography
-              gutterBottom
-              variant="caption"
-              sx={{
-                fontSize: `${theme.typography.pxToRem(12)}`
-              }}
-            >
-              Carga Horária
-            </Typography>
-            <Typography variant="h5">{Evento.cargaHoraria} horas</Typography>
+          <Box pb={0.5} pt={1} display="flex">
+            <Box pr={2}>
+              <Typography
+                gutterBottom
+                variant="caption"
+                sx={{
+                  fontSize: `${theme.typography.pxToRem(12)}`
+                }}
+              >
+                Carga Horária
+              </Typography>
+              <Typography variant="h5">{Evento.cargaHoraria} horas</Typography>
+            </Box>
+            <Box pr={2}>
+              <Typography
+                gutterBottom
+                variant="caption"
+                sx={{ fontSize: `${theme.typography.pxToRem(12)}` }}
+              >
+                Instrutor
+              </Typography>
+              <Typography variant="h5">{Evento.instrutor}</Typography>
+            </Box>
           </Box>
-          <Box pr={4}>
+          <Box mb={0.5} pr={4}>
             <Typography
               gutterBottom
               variant="caption"
-              sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
-            >
-              Instrutor
-            </Typography>
-            <Typography variant="h5">{Evento.instrutor}</Typography>
-          </Box>
-        </Box>
-        <Box pl={2} flex={1}>
-          <Box pr={4}>
-            <Typography
-              gutterBottom
-              variant="caption"
-              sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
+              sx={{ fontSize: `${theme.typography.pxToRem(12)}` }}
             >
               Data do Evento
             </Typography>
@@ -226,6 +215,18 @@ function EventoInformation({ Evento }: PropsEvento) {
           </Box>
         </Box>
       </Box>
+      <CardActions>
+        <Button
+          size="small"
+          variant="contained"
+          onClick={() => {
+            navigator.clipboard.writeText(eventoLink);
+          }}
+          startIcon={<ContentPasteIcon fontSize="small" />}
+        >
+          Copiar link de compartilhamento
+        </Button>
+      </CardActions>
     </Card>
   );
 }
