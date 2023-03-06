@@ -77,6 +77,14 @@ function EventoInformation({ Evento }: PropsEvento) {
                 ID
               </Typography>
               <Typography variant="h5"> {Evento.id}</Typography>
+              <Typography
+                gutterBottom
+                variant="caption"
+                sx={{ fontSize: `${theme.typography.pxToRem(14)}` }}
+              >
+                Hash/Senha
+              </Typography>
+              <Typography variant="h5">{Evento.eventoHash}</Typography>
             </Box>
             <Box pr={4}>
               <Typography

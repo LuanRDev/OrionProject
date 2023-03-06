@@ -2,6 +2,7 @@ import { ConteudoEvento } from './conteudo_evento';
 
 export interface Evento {
   id: number;
+  eventoHash: string;
   tipoEvento: number;
   descricao: string;
   empresa: string;
