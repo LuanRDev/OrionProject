@@ -7,10 +7,12 @@ import {
   Avatar,
   useTheme,
   styled,
-  Grid
+  Grid,
+  Button
 } from '@mui/material';
 import Chart from 'react-apexcharts';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import EventIcon from '@mui/icons-material/Event';
 import GroupsIcon from '@mui/icons-material/Groups';
 import { ApexOptions } from 'apexcharts';
@@ -34,6 +36,7 @@ const AvatarPrimary = styled(Avatar)(
 function EventoInformation({ Evento }: PropsEvento) {
   const theme = useTheme();
 
+  var eventoLink = `${window.location.origin}/eventos/${Evento.id}/registrar-participacao?hashEvento=${Evento.eventoHash}`;
   const chartOptions: ApexOptions = {
     series: [Evento.participantesEsperados, Evento.participacoesConfirmadas],
     chart: {
@@ -64,9 +67,21 @@ function EventoInformation({ Evento }: PropsEvento) {
           <EventIcon />
         </AvatarPrimary>
         <Box pl={2} flex={1}>
-          <Typography variant="h4">
-            {Evento.empresa} - {ReturnEventoTipo(Evento.tipoEvento)}
-          </Typography>
+          <Box>
+            <Typography variant="h4">
+              {Evento.empresa} - {ReturnEventoTipo(Evento.tipoEvento)}
+            </Typography>
+            <Button
+              size="small"
+              variant="contained"
+              onClick={() => {
+                navigator.clipboard.writeText(eventoLink);
+              }}
+              startIcon={<ContentPasteIcon fontSize="small" />}
+            >
+              Copiar link de compartilhamento
+            </Button>
+          </Box>
           <Box pt={2} display="flex">
             <Box pr={4}>
               <Typography
